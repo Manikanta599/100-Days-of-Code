@@ -1,0 +1,520 @@
+
+<h2 class="sr-only">100 Days of Data Structures — Full question plan with 5 questions per day, organized by topic</h2>
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body { font-family: var(--font-sans); }
+.header { padding: 1.5rem 0 1rem; }
+.header h1 { font-size: 20px; font-weight: 500; color: var(--color-text-primary); }
+.header p { font-size: 13px; color: var(--color-text-secondary); margin-top: 4px; }
+.stats { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; margin: 1rem 0 1.5rem; }
+.stat { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 0.75rem 1rem; }
+.stat-val { font-size: 22px; font-weight: 500; color: var(--color-text-primary); }
+.stat-lbl { font-size: 12px; color: var(--color-text-secondary); margin-top: 2px; }
+.filters { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 1.25rem; align-items: center; }
+.filter-btn { font-size: 12px; padding: 5px 12px; border-radius: 99px; border: 0.5px solid var(--color-border-secondary); background: transparent; color: var(--color-text-secondary); cursor: pointer; transition: all 0.15s; }
+.filter-btn:hover { background: var(--color-background-secondary); }
+.filter-btn.active { background: var(--color-text-primary); color: var(--color-background-primary); border-color: var(--color-text-primary); }
+.search-wrap { flex: 1; min-width: 160px; }
+.search-wrap input { width: 100%; font-size: 13px; padding: 6px 12px; border-radius: var(--border-radius-md); }
+.week-group { margin-bottom: 1.5rem; }
+.week-label { font-size: 11px; font-weight: 500; color: var(--color-text-tertiary); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 8px; padding-bottom: 6px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.day-card { border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); background: var(--color-background-primary); margin-bottom: 8px; overflow: hidden; }
+.day-header { display: flex; align-items: center; gap: 12px; padding: 10px 14px; cursor: pointer; user-select: none; }
+.day-header:hover { background: var(--color-background-secondary); }
+.day-num { font-size: 12px; font-weight: 500; color: var(--color-text-tertiary); min-width: 44px; }
+.day-topic { font-size: 14px; font-weight: 500; color: var(--color-text-primary); flex: 1; }
+.day-tag { font-size: 11px; padding: 2px 8px; border-radius: 99px; margin-right: 4px; }
+.chevron { font-size: 16px; color: var(--color-text-tertiary); transition: transform 0.2s; }
+.day-body { padding: 0 14px 12px; display: none; }
+.day-body.open { display: block; }
+.q-list { list-style: none; margin-top: 4px; }
+.q-item { display: flex; align-items: flex-start; gap: 10px; padding: 6px 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.q-item:last-child { border-bottom: none; }
+.q-num { font-size: 12px; color: var(--color-text-tertiary); min-width: 20px; padding-top: 1px; }
+.q-text { font-size: 13px; color: var(--color-text-primary); flex: 1; line-height: 1.5; }
+.q-diff { font-size: 11px; padding: 1px 7px; border-radius: 99px; margin-left: 6px; white-space: nowrap; }
+.diff-easy { background: #EAF3DE; color: #3B6D11; }
+.diff-medium { background: #FAEEDA; color: #854F0B; }
+.diff-hard { background: #FCEBEB; color: #A32D2D; }
+.topic-pill { font-size: 11px; padding: 2px 8px; border-radius: 99px; }
+.no-results { text-align: center; padding: 2rem; color: var(--color-text-tertiary); font-size: 14px; }
+.expand-all { font-size: 12px; color: var(--color-text-secondary); background: transparent; border: none; cursor: pointer; padding: 0; text-decoration: underline; }
+</style>
+
+<div class="header">
+  <h1>100 Days of DSA — LinkedIn Post Plan</h1>
+  <p>500 questions · 5 per day · Organized by topic with difficulty</p>
+</div>
+
+<div class="stats">
+  <div class="stat"><div class="stat-val">100</div><div class="stat-lbl">Days</div></div>
+  <div class="stat"><div class="stat-val">500</div><div class="stat-lbl">Questions</div></div>
+  <div class="stat"><div class="stat-val">15</div><div class="stat-lbl">Topics</div></div>
+  <div class="stat"><div class="stat-val" id="easy-count">0</div><div class="stat-lbl">Easy / Med / Hard</div></div>
+</div>
+
+<div class="filters">
+  <div class="search-wrap"><input type="text" placeholder="Search by day, topic, or question..." id="searchBox" /></div>
+  <button class="filter-btn active" data-filter="all">All topics</button>
+  <button class="filter-btn" data-filter="Arrays">Arrays</button>
+  <button class="filter-btn" data-filter="Strings">Strings</button>
+  <button class="filter-btn" data-filter="Hashing">Hashing</button>
+  <button class="filter-btn" data-filter="Linked List">Linked List</button>
+  <button class="filter-btn" data-filter="Stack & Queue">Stack & Queue</button>
+  <button class="filter-btn" data-filter="Trees">Trees</button>
+  <button class="filter-btn" data-filter="Graphs">Graphs</button>
+  <button class="filter-btn" data-filter="DP">DP</button>
+  <button class="filter-btn" data-filter="Heap">Heap</button>
+  <button class="filter-btn" data-filter="Backtracking">Backtracking</button>
+</div>
+
+<div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px;">
+  <span style="font-size:12px; color:var(--color-text-tertiary);" id="result-count">Showing all 100 days</span>
+  <button class="expand-all" id="expandAllBtn">Expand all</button>
+</div>
+
+<div id="plan-container"></div>
+
+<script>
+const DAYS = [
+  {day:1,topic:"Arrays — Basics",tag:"Arrays",qs:[
+    ["Two Sum","Easy"],["Best Time to Buy and Sell Stock","Easy"],["Contains Duplicate","Easy"],["Maximum Subarray (Kadane's)","Medium"],["Product of Array Except Self","Medium"]
+  ]},
+  {day:2,topic:"Arrays — Sliding Window I",tag:"Arrays",qs:[
+    ["Maximum Average Subarray I","Easy"],["Minimum Size Subarray Sum","Medium"],["Longest Subarray of 1s After Deleting One Element","Medium"],["Maximum Points You Can Obtain From Cards","Medium"],["Subarray Sum Equals K","Medium"]
+  ]},
+  {day:3,topic:"Arrays — Two Pointers",tag:"Arrays",qs:[
+    ["Squares of Sorted Array","Easy"],["Two Sum II (Sorted Input)","Medium"],["3Sum","Medium"],["Container With Most Water","Medium"],["Trapping Rain Water","Hard"]
+  ]},
+  {day:4,topic:"Arrays — Prefix Sum & Intervals",tag:"Arrays",qs:[
+    ["Range Sum Query (Immutable)","Easy"],["Running Sum of 1D Array","Easy"],["Merge Intervals","Medium"],["Insert Interval","Medium"],["Non-overlapping Intervals","Medium"]
+  ]},
+  {day:5,topic:"Arrays — Sorting & Search",tag:"Arrays",qs:[
+    ["Sort Colors (Dutch National Flag)","Medium"],["Find Minimum in Rotated Sorted Array","Medium"],["Search in Rotated Sorted Array","Medium"],["Kth Largest Element in Array","Medium"],["Median of Two Sorted Arrays","Hard"]
+  ]},
+  {day:6,topic:"Strings — Basics",tag:"Strings",qs:[
+    ["Valid Palindrome","Easy"],["Reverse String","Easy"],["Valid Anagram","Easy"],["First Unique Character in String","Easy"],["Longest Common Prefix","Easy"]
+  ]},
+  {day:7,topic:"Strings — Sliding Window",tag:"Strings",qs:[
+    ["Longest Substring Without Repeating Characters","Medium"],["Longest Repeating Character Replacement","Medium"],["Minimum Window Substring","Hard"],["Find All Anagrams in String","Medium"],["Permutation in String","Medium"]
+  ]},
+  {day:8,topic:"Strings — Manipulation",tag:"Strings",qs:[
+    ["Reverse Words in String","Medium"],["String to Integer (atoi)","Medium"],["Zigzag Conversion","Medium"],["Count and Say","Medium"],["Decode String","Medium"]
+  ]},
+  {day:9,topic:"Strings — Pattern Matching",tag:"Strings",qs:[
+    ["Implement strStr() (KMP)","Easy"],["Repeated Substring Pattern","Easy"],["Longest Palindromic Substring","Medium"],["Palindromic Substrings","Medium"],["Regular Expression Matching","Hard"]
+  ]},
+  {day:10,topic:"Strings — Advanced",tag:"Strings",qs:[
+    ["Group Anagrams","Medium"],["Encode and Decode Strings","Medium"],["Multiply Strings","Medium"],["Minimum Remove to Make Valid Parentheses","Medium"],["Valid Parenthesis String","Medium"]
+  ]},
+  {day:11,topic:"Hashing — Fundamentals",tag:"Hashing",qs:[
+    ["Two Sum (HashMap)","Easy"],["Intersection of Two Arrays","Easy"],["Happy Number","Easy"],["Isomorphic Strings","Easy"],["Word Pattern","Easy"]
+  ]},
+  {day:12,topic:"Hashing — Frequency & Counting",tag:"Hashing",qs:[
+    ["Top K Frequent Elements","Medium"],["Sort Characters by Frequency","Medium"],["Find All Duplicates in Array","Medium"],["Longest Consecutive Sequence","Medium"],["Subarray Sum Equals K","Medium"]
+  ]},
+  {day:13,topic:"Hashing — Design & Advanced",tag:"Hashing",qs:[
+    ["Design HashMap","Easy"],["LRU Cache","Medium"],["LFU Cache","Hard"],["Random Pick with Weight","Medium"],["Insert Delete GetRandom O(1)","Medium"]
+  ]},
+  {day:14,topic:"Linked List — Basics",tag:"Linked List",qs:[
+    ["Reverse Linked List","Easy"],["Merge Two Sorted Lists","Easy"],["Linked List Cycle","Easy"],["Middle of Linked List","Easy"],["Remove Duplicates from Sorted List","Easy"]
+  ]},
+  {day:15,topic:"Linked List — Two Pointers",tag:"Linked List",qs:[
+    ["Linked List Cycle II","Medium"],["Remove Nth Node From End","Medium"],["Reorder List","Medium"],["Find the Duplicate Number","Medium"],["Intersection of Two Linked Lists","Easy"]
+  ]},
+  {day:16,topic:"Linked List — Manipulation",tag:"Linked List",qs:[
+    ["Add Two Numbers","Medium"],["Flatten a Multilevel Doubly Linked List","Medium"],["Copy List with Random Pointer","Medium"],["Swap Nodes in Pairs","Medium"],["Rotate List","Medium"]
+  ]},
+  {day:17,topic:"Linked List — Advanced",tag:"Linked List",qs:[
+    ["Merge K Sorted Lists","Hard"],["Reverse Nodes in k-Group","Hard"],["Sort List","Medium"],["Palindrome Linked List","Easy"],["Remove Linked List Elements","Easy"]
+  ]},
+  {day:18,topic:"Stack — Basics",tag:"Stack & Queue",qs:[
+    ["Valid Parentheses","Easy"],["Min Stack","Medium"],["Evaluate Reverse Polish Notation","Medium"],["Baseball Game","Easy"],["Remove All Adjacent Duplicates","Easy"]
+  ]},
+  {day:19,topic:"Stack — Monotonic Stack",tag:"Stack & Queue",qs:[
+    ["Daily Temperatures","Medium"],["Next Greater Element I","Easy"],["Next Greater Element II","Medium"],["Largest Rectangle in Histogram","Hard"],["Maximal Rectangle","Hard"]
+  ]},
+  {day:20,topic:"Queue — Design & BFS",tag:"Stack & Queue",qs:[
+    ["Implement Queue Using Stacks","Easy"],["Implement Stack Using Queues","Easy"],["Design Circular Queue","Medium"],["Number of Recent Calls","Easy"],["Task Scheduler","Medium"]
+  ]},
+  {day:21,topic:"Stack & Queue — Mixed",tag:"Stack & Queue",qs:[
+    ["Decode String","Medium"],["Asteroid Collision","Medium"],["Remove K Digits","Medium"],["132 Pattern","Medium"],["Sliding Window Maximum","Hard"]
+  ]},
+  {day:22,topic:"Binary Search — Basics",tag:"Arrays",qs:[
+    ["Binary Search","Easy"],["Search Insert Position","Easy"],["First Bad Version","Easy"],["Guess Number Higher or Lower","Easy"],["Find Peak Element","Medium"]
+  ]},
+  {day:23,topic:"Binary Search — Advanced",tag:"Arrays",qs:[
+    ["Search a 2D Matrix","Medium"],["Find Minimum in Rotated Sorted Array II","Hard"],["Find Right Interval","Medium"],["Koko Eating Bananas","Medium"],["Capacity to Ship Packages Within D Days","Medium"]
+  ]},
+  {day:24,topic:"Trees — Basics & Traversal",tag:"Trees",qs:[
+    ["Binary Tree Inorder Traversal","Easy"],["Binary Tree Preorder Traversal","Easy"],["Binary Tree Postorder Traversal","Easy"],["Maximum Depth of Binary Tree","Easy"],["Symmetric Tree","Easy"]
+  ]},
+  {day:25,topic:"Trees — BFS Level Order",tag:"Trees",qs:[
+    ["Binary Tree Level Order Traversal","Medium"],["Binary Tree Zigzag Level Order","Medium"],["Average of Levels in Binary Tree","Easy"],["Maximum Width of Binary Tree","Medium"],["Populating Next Right Pointers","Medium"]
+  ]},
+  {day:26,topic:"Trees — Path & Values",tag:"Trees",qs:[
+    ["Path Sum","Easy"],["Path Sum II","Medium"],["Binary Tree Maximum Path Sum","Hard"],["Sum Root to Leaf Numbers","Medium"],["Diameter of Binary Tree","Easy"]
+  ]},
+  {day:27,topic:"Trees — Construction",tag:"Trees",qs:[
+    ["Construct BT from Preorder and Inorder","Medium"],["Construct BT from Inorder and Postorder","Medium"],["Serialize and Deserialize Binary Tree","Hard"],["Convert Sorted Array to BST","Easy"],["Flatten BT to Linked List","Medium"]
+  ]},
+  {day:28,topic:"BST — Operations",tag:"Trees",qs:[
+    ["Validate Binary Search Tree","Medium"],["Search in BST","Easy"],["Insert into BST","Medium"],["Delete Node in BST","Medium"],["Lowest Common Ancestor of BST","Medium"]
+  ]},
+  {day:29,topic:"BST — Advanced",tag:"Trees",qs:[
+    ["Kth Smallest Element in BST","Medium"],["Recover Binary Search Tree","Medium"],["Lowest Common Ancestor of BT","Medium"],["Count Nodes in Complete BT","Medium"],["Range Sum of BST","Easy"]
+  ]},
+  {day:30,topic:"Trie",tag:"Trees",qs:[
+    ["Implement Trie (Prefix Tree)","Medium"],["Add and Search Word","Medium"],["Replace Words","Medium"],["Design Search Autocomplete System","Hard"],["Word Search II","Hard"]
+  ]},
+  {day:31,topic:"Heap — Basics",tag:"Heap",qs:[
+    ["Kth Largest Element in Stream","Easy"],["Last Stone Weight","Easy"],["K Closest Points to Origin","Medium"],["Find Median from Data Stream","Hard"],["Minimum Cost to Connect Sticks","Medium"]
+  ]},
+  {day:32,topic:"Heap — Top K & Scheduling",tag:"Heap",qs:[
+    ["Top K Frequent Words","Medium"],["Sort Characters by Frequency","Medium"],["Task Scheduler","Medium"],["Reorganize String","Medium"],["Course Schedule III","Hard"]
+  ]},
+  {day:33,topic:"Heap — Advanced",tag:"Heap",qs:[
+    ["Merge K Sorted Lists","Hard"],["Smallest Range Covering Elements from K Lists","Hard"],["IPO","Hard"],["Maximum Profit in Job Scheduling","Hard"],["Sliding Window Median","Hard"]
+  ]},
+  {day:34,topic:"Graphs — Representation & BFS",tag:"Graphs",qs:[
+    ["Number of Islands","Medium"],["Flood Fill","Easy"],["01 Matrix","Medium"],["Rotting Oranges","Medium"],["Shortest Path in Binary Matrix","Medium"]
+  ]},
+  {day:35,topic:"Graphs — DFS",tag:"Graphs",qs:[
+    ["Number of Connected Components","Medium"],["Pacific Atlantic Water Flow","Medium"],["Max Area of Island","Medium"],["Number of Provinces","Medium"],["Path Exists in Graph","Easy"]
+  ]},
+  {day:36,topic:"Graphs — Cycle Detection",tag:"Graphs",qs:[
+    ["Course Schedule I","Medium"],["Course Schedule II","Medium"],["Find Eventual Safe States","Medium"],["Detect Cycle in Undirected Graph","Medium"],["Detect Cycle in Directed Graph","Medium"]
+  ]},
+  {day:37,topic:"Graphs — Shortest Path",tag:"Graphs",qs:[
+    ["Network Delay Time (Dijkstra)","Medium"],["Cheapest Flights Within K Stops","Medium"],["Path With Minimum Effort","Medium"],["Swim in Rising Water","Hard"],["Shortest Path Visiting All Nodes","Hard"]
+  ]},
+  {day:38,topic:"Graphs — Union Find",tag:"Graphs",qs:[
+    ["Number of Islands II","Hard"],["Redundant Connection","Medium"],["Accounts Merge","Medium"],["Satisfiability of Equality Equations","Medium"],["Making a Large Island","Hard"]
+  ]},
+  {day:39,topic:"Graphs — Topological Sort",tag:"Graphs",qs:[
+    ["Alien Dictionary","Hard"],["Sequence Reconstruction","Medium"],["Build Order (CTCI)","Medium"],["Parallel Courses","Medium"],["Minimum Height Trees","Medium"]
+  ]},
+  {day:40,topic:"Graphs — Advanced",tag:"Graphs",qs:[
+    ["Clone Graph","Medium"],["Word Ladder","Hard"],["Word Ladder II","Hard"],["Critical Connections (Bridges)","Hard"],["Reconstruct Itinerary","Hard"]
+  ]},
+  {day:41,topic:"DP — 1D Basics",tag:"DP",qs:[
+    ["Climbing Stairs","Easy"],["House Robber","Medium"],["House Robber II","Medium"],["Min Cost Climbing Stairs","Easy"],["Decode Ways","Medium"]
+  ]},
+  {day:42,topic:"DP — 1D Intermediate",tag:"DP",qs:[
+    ["Longest Increasing Subsequence","Medium"],["Number of Longest Increasing Subsequence","Medium"],["Russian Doll Envelopes","Hard"],["Wiggle Subsequence","Medium"],["Arithmetic Slices","Medium"]
+  ]},
+  {day:43,topic:"DP — Coin & Knapsack",tag:"DP",qs:[
+    ["Coin Change","Medium"],["Coin Change II","Medium"],["Partition Equal Subset Sum","Medium"],["Last Stone Weight II","Medium"],["Target Sum","Medium"]
+  ]},
+  {day:44,topic:"DP — 2D Grid",tag:"DP",qs:[
+    ["Unique Paths","Medium"],["Unique Paths II","Medium"],["Minimum Path Sum","Medium"],["Maximal Square","Medium"],["Dungeon Game","Hard"]
+  ]},
+  {day:45,topic:"DP — Subsequence & Substring",tag:"DP",qs:[
+    ["Longest Common Subsequence","Medium"],["Edit Distance","Medium"],["Distinct Subsequences","Hard"],["Longest Common Substring","Medium"],["Shortest Common Supersequence","Hard"]
+  ]},
+  {day:46,topic:"DP — Palindrome",tag:"DP",qs:[
+    ["Longest Palindromic Subsequence","Medium"],["Palindromic Substrings","Medium"],["Minimum Insertions to Make Palindrome","Medium"],["Strange Printer","Hard"],["Burst Balloons","Hard"]
+  ]},
+  {day:47,topic:"DP — Interval",tag:"DP",qs:[
+    ["Matrix Chain Multiplication","Medium"],["Minimum Cost to Merge Stones","Hard"],["Remove Boxes","Hard"],["Zuma Game","Hard"],["Predict the Winner","Medium"]
+  ]},
+  {day:48,topic:"DP — State Machine",tag:"DP",qs:[
+    ["Best Time Buy/Sell Stock III","Hard"],["Best Time Buy/Sell Stock IV","Hard"],["Best Time with Cooldown","Medium"],["Best Time with Transaction Fee","Medium"],["Paint House II","Hard"]
+  ]},
+  {day:49,topic:"DP — Bitmask",tag:"DP",qs:[
+    ["Traveling Salesman (Bitmask DP)","Hard"],["Shortest Path Visiting All Nodes","Hard"],["Partition to K Equal Subsets","Medium"],["Maximum Students Taking Exam","Hard"],["Minimum XOR Sum of Two Arrays","Hard"]
+  ]},
+  {day:50,topic:"DP — Mixed Review",tag:"DP",qs:[
+    ["Word Break","Medium"],["Word Break II","Hard"],["Concatenated Words","Hard"],["Ugly Number II","Medium"],["Super Egg Drop","Hard"]
+  ]},
+  {day:51,topic:"Backtracking — Basics",tag:"Backtracking",qs:[
+    ["Subsets","Medium"],["Subsets II","Medium"],["Permutations","Medium"],["Permutations II","Medium"],["Combinations","Medium"]
+  ]},
+  {day:52,topic:"Backtracking — Combinatorics",tag:"Backtracking",qs:[
+    ["Combination Sum","Medium"],["Combination Sum II","Medium"],["Combination Sum III","Medium"],["Letter Combinations of Phone Number","Medium"],["Generate Parentheses","Medium"]
+  ]},
+  {day:53,topic:"Backtracking — Grid & Board",tag:"Backtracking",qs:[
+    ["Word Search","Medium"],["N-Queens","Hard"],["N-Queens II","Hard"],["Sudoku Solver","Hard"],["Palindrome Partitioning","Medium"]
+  ]},
+  {day:54,topic:"Backtracking — Advanced",tag:"Backtracking",qs:[
+    ["Beautiful Arrangement","Medium"],["Restore IP Addresses","Medium"],["Expression Add Operators","Hard"],["Remove Invalid Parentheses","Hard"],["Zuma Game","Hard"]
+  ]},
+  {day:55,topic:"Greedy — Basics",tag:"Greedy",qs:[
+    ["Jump Game","Medium"],["Jump Game II","Medium"],["Assign Cookies","Easy"],["Lemonade Change","Easy"],["Gas Station","Medium"]
+  ]},
+  {day:56,topic:"Greedy — Intervals",tag:"Greedy",qs:[
+    ["Meeting Rooms","Easy"],["Meeting Rooms II","Medium"],["Non-overlapping Intervals","Medium"],["Minimum Number of Arrows to Burst Balloons","Medium"],["Partition Labels","Medium"]
+  ]},
+  {day:57,topic:"Greedy — Advanced",tag:"Greedy",qs:[
+    ["Candy","Hard"],["Minimum Cost to Hire K Workers","Hard"],["Advantage Shuffle","Medium"],["Task Scheduler","Medium"],["IPO","Hard"]
+  ]},
+  {day:58,topic:"Bit Manipulation — Basics",tag:"Bit Manipulation",qs:[
+    ["Single Number","Easy"],["Number of 1 Bits","Easy"],["Reverse Bits","Easy"],["Missing Number","Easy"],["Counting Bits","Easy"]
+  ]},
+  {day:59,topic:"Bit Manipulation — Intermediate",tag:"Bit Manipulation",qs:[
+    ["Single Number II","Medium"],["Single Number III","Medium"],["Sum of Two Integers","Medium"],["Bitwise AND of Numbers Range","Medium"],["Power of Two","Easy"]
+  ]},
+  {day:60,topic:"Bit Manipulation — Advanced",tag:"Bit Manipulation",qs:[
+    ["Maximum XOR of Two Numbers","Medium"],["Maximum Product of Word Lengths","Medium"],["Subsets (Bitmask)","Medium"],["Repeated DNA Sequences","Medium"],["UTF-8 Validation","Medium"]
+  ]},
+  {day:61,topic:"Math & Number Theory",tag:"Math",qs:[
+    ["Fibonacci Number","Easy"],["Power(x, n) — Fast Exponentiation","Medium"],["Sqrt(x)","Easy"],["Excel Sheet Column Number","Easy"],["Roman to Integer","Easy"]
+  ]},
+  {day:62,topic:"Math — Primes & Modular",tag:"Math",qs:[
+    ["Count Primes (Sieve)","Medium"],["Super Pow","Medium"],["Factorial Trailing Zeroes","Medium"],["Integer Break","Medium"],["Largest Number","Medium"]
+  ]},
+  {day:63,topic:"Recursion & Divide & Conquer",tag:"Recursion",qs:[
+    ["Merge Sort Implementation","Medium"],["Quick Sort Implementation","Medium"],["Different Ways to Add Parentheses","Medium"],["K-th Symbol in Grammar","Medium"],["Pow(x, n)","Medium"]
+  ]},
+  {day:64,topic:"Design — Data Structures",tag:"Design",qs:[
+    ["Design Linked List","Medium"],["Design HashSet","Easy"],["Design HashMap","Easy"],["Design Browser History","Medium"],["Design Twitter","Medium"]
+  ]},
+  {day:65,topic:"Design — Advanced Systems",tag:"Design",qs:[
+    ["LRU Cache","Medium"],["LFU Cache","Hard"],["Design Hit Counter","Medium"],["All O'one Data Structure","Hard"],["Snapshot Array","Medium"]
+  ]},
+  {day:66,topic:"Segment Tree & BIT",tag:"Advanced DS",qs:[
+    ["Range Sum Query Mutable (BIT)","Medium"],["Count of Smaller Numbers After Self","Hard"],["Range Sum Query 2D Mutable","Hard"],["The Skyline Problem","Hard"],["Count of Range Sum","Hard"]
+  ]},
+  {day:67,topic:"Monotonic Stack — Deep Dive",tag:"Stack & Queue",qs:[
+    ["Sum of Subarray Minimums","Medium"],["Sum of Subarray Ranges","Medium"],["Maximum Score of Good Subarray","Hard"],["Number of Visible People in Queue","Hard"],["Building With Ocean View","Medium"]
+  ]},
+  {day:68,topic:"Two Heaps Pattern",tag:"Heap",qs:[
+    ["Find Median from Data Stream","Hard"],["Sliding Window Median","Hard"],["IPO","Hard"],["Maximum Performance of Team","Hard"],["Meeting Rooms III","Hard"]
+  ]},
+  {day:69,topic:"Union Find — Deep Dive",tag:"Graphs",qs:[
+    ["Number of Operations to Make Network Connected","Medium"],["Smallest String with Swaps","Medium"],["Minimize Malware Spread","Hard"],["Remove Max Number of Edges to Keep Graph Fully Traversable","Hard"],["Checking Existence of Edge Length Limited Paths","Hard"]
+  ]},
+  {day:70,topic:"Graph — MST (Minimum Spanning Tree)",tag:"Graphs",qs:[
+    ["Min Cost to Connect All Points (Prim)","Medium"],["Kruskal's MST Algorithm","Medium"],["Optimize Water Distribution in Village","Hard"],["Connecting Cities With Minimum Cost","Medium"],["Critical Connections in Network","Hard"]
+  ]},
+  {day:71,topic:"Advanced DP — Trees",tag:"DP",qs:[
+    ["House Robber III","Medium"],["Binary Tree Cameras","Hard"],["Distribute Coins in BT","Medium"],["All Possible Full Binary Trees","Medium"],["Unique Binary Search Trees II","Medium"]
+  ]},
+  {day:72,topic:"Advanced DP — Digit DP",tag:"DP",qs:[
+    ["Count Numbers with Unique Digits","Medium"],["Numbers At Most N Given Digit Set","Hard"],["Non-negative Integers without Consecutive Ones","Hard"],["Digit DP — Count Digit One","Hard"],["Rotated Digits","Medium"]
+  ]},
+  {day:73,topic:"Sliding Window — Advanced",tag:"Arrays",qs:[
+    ["Fruit Into Baskets","Medium"],["Max Consecutive Ones III","Medium"],["Longest Continuous Subarray with Absolute Diff ≤ Limit","Medium"],["Minimum Swaps to Group All 1s Together","Medium"],["Subarrays with K Different Integers","Hard"]
+  ]},
+  {day:74,topic:"Matrix — Advanced",tag:"Arrays",qs:[
+    ["Spiral Matrix","Medium"],["Rotate Image","Medium"],["Set Matrix Zeroes","Medium"],["Search a 2D Matrix II","Medium"],["Word Search","Medium"]
+  ]},
+  {day:75,topic:"String — Advanced Patterns",tag:"Strings",qs:[
+    ["Shortest Palindrome (KMP)","Hard"],["Longest Duplicate Substring (Binary Search + Rabin-Karp)","Hard"],["Distinct Subsequences","Hard"],["Wildcard Matching","Hard"],["Interleaving String","Medium"]
+  ]},
+  {day:76,topic:"Graph — Advanced Traversal",tag:"Graphs",qs:[
+    ["Minimum Genetic Mutation (BFS)","Medium"],["Open the Lock","Medium"],["Jump Game VI","Medium"],["Snakes and Ladders","Medium"],["Bus Routes","Hard"]
+  ]},
+  {day:77,topic:"Heap — Custom Comparators",tag:"Heap",qs:[
+    ["Process Tasks Using Servers","Medium"],["Single-Threaded CPU","Medium"],["Minimum Cost to Hire K Workers","Hard"],["The K Weakest Rows in Matrix","Easy"],["Find K Pairs with Smallest Sums","Medium"]
+  ]},
+  {day:78,topic:"Backtracking — Hard",tag:"Backtracking",qs:[
+    ["N-Queens II","Hard"],["Sudoku Solver","Hard"],["Sticker to Spell Word","Hard"],["Concatenate Strings 1","Hard"],["Minimum Unique Word Abbreviation","Hard"]
+  ]},
+  {day:79,topic:"Concurrency & Semaphore",tag:"Design",qs:[
+    ["Print in Order","Easy"],["Print FooBar Alternately","Medium"],["Print Zero Even Odd","Medium"],["Building H2O","Medium"],["The Dining Philosophers","Medium"]
+  ]},
+  {day:80,topic:"Mixed Hard — Day 1",tag:"Mixed",qs:[
+    ["Median of Two Sorted Arrays","Hard"],["Regular Expression Matching","Hard"],["Merge K Sorted Lists","Hard"],["Largest Rectangle in Histogram","Hard"],["Serialize/Deserialize Binary Tree","Hard"]
+  ]},
+  {day:81,topic:"Mixed Hard — Day 2",tag:"Mixed",qs:[
+    ["Word Ladder II","Hard"],["Alien Dictionary","Hard"],["N-Queens","Hard"],["Burst Balloons","Hard"],["Trapping Rain Water II","Hard"]
+  ]},
+  {day:82,topic:"Mixed Hard — Day 3",tag:"Mixed",qs:[
+    ["Super Egg Drop","Hard"],["Shortest Path Visiting All Nodes","Hard"],["Count of Smaller Numbers After Self","Hard"],["Minimum Window Substring","Hard"],["Wildcard Matching","Hard"]
+  ]},
+  {day:83,topic:"Mixed Medium — Patterns",tag:"Mixed",qs:[
+    ["Minimum Operations to Reduce X to Zero","Medium"],["Maximum Erasure Value","Medium"],["Maximum Number of Vowels in Substring","Medium"],["Get Equal Substrings Within Budget","Medium"],["Minimum Consecutive Cards to Pick Up","Medium"]
+  ]},
+  {day:84,topic:"Array — Interval Scheduling",tag:"Arrays",qs:[
+    ["My Calendar I","Medium"],["My Calendar II","Medium"],["My Calendar III","Hard"],["Range Module","Hard"],["Data Stream as Disjoint Intervals","Hard"]
+  ]},
+  {day:85,topic:"Recursion — Fractal Patterns",tag:"Recursion",qs:[
+    ["Tower of Hanoi","Medium"],["Generate All Balanced Parentheses","Medium"],["Gray Code","Medium"],["K-th Grammar in Fibonacci","Medium"],["Count Different Palindromic Subsequences","Hard"]
+  ]},
+  {day:86,topic:"Graph — Bipartite & Coloring",tag:"Graphs",qs:[
+    ["Is Graph Bipartite?","Medium"],["Possible Bipartition","Medium"],["Flower Planting with No Adjacent","Medium"],["Color the Graph with 3 Colors","Hard"],["Minimum Color the Edges","Hard"]
+  ]},
+  {day:87,topic:"Advanced Trees — Segment Tree",tag:"Advanced DS",qs:[
+    ["Range Sum Query Mutable","Medium"],["Range Minimum Query","Medium"],["Falling Squares","Hard"],["Rectangle Area II","Hard"],["Longest Increasing Subsequence II","Hard"]
+  ]},
+  {day:88,topic:"String — Rolling Hash & Manacher",tag:"Strings",qs:[
+    ["Longest Palindromic Substring (Manacher)","Medium"],["Palindrome Pairs","Hard"],["Repeated String Match","Medium"],["Find Repeated DNA Sequences","Medium"],["Rabin-Karp Substring Search","Medium"]
+  ]},
+  {day:89,topic:"DP — Probability & Expected Value",tag:"DP",qs:[
+    ["New 21 Game","Medium"],["Knight Probability in Chessboard","Medium"],["Soup Servings","Medium"],["Dice Roll Simulation","Medium"],["Frog Jump","Hard"]
+  ]},
+  {day:90,topic:"Mixed — Company Favorites",tag:"Mixed",qs:[
+    ["Design Tic-Tac-Toe","Medium"],["Design Snake Game","Medium"],["Design In-Memory File System","Hard"],["Design Log Storage System","Medium"],["Design Excel Sum Formula","Hard"]
+  ]},
+  {day:91,topic:"Review — Arrays & Strings",tag:"Mixed",qs:[
+    ["Minimum Sliding Window","Hard"],["Substring with Concatenation of All Words","Hard"],["Text Justification","Hard"],["Scramble String","Hard"],["Maximum Gap","Hard"]
+  ]},
+  {day:92,topic:"Review — Trees & Graphs",tag:"Mixed",qs:[
+    ["Binary Tree Right Side View","Medium"],["Vertical Order Traversal of BT","Hard"],["All Nodes Distance K in BT","Medium"],["Reachable Nodes in Subdivided Graph","Hard"],["Number of Ways to Arrive at Destination","Medium"]
+  ]},
+  {day:93,topic:"Review — DP & Greedy",tag:"Mixed",qs:[
+    ["Freedom Trail","Hard"],["Student Attendance Record II","Hard"],["Minimum Cost to Cut a Stick","Hard"],["Strange Printer","Hard"],["Minimum Number of Taps to Open Garden","Hard"]
+  ]},
+  {day:94,topic:"Competitive — Mock Interview 1",tag:"Mixed",qs:[
+    ["Two Sum IV (BST)","Easy"],["3Sum Closest","Medium"],["Four Sum","Medium"],["Maximum Product Subarray","Medium"],["Jump Game III","Medium"]
+  ]},
+  {day:95,topic:"Competitive — Mock Interview 2",tag:"Mixed",qs:[
+    ["LRU Cache","Medium"],["Time Based Key-Value Store","Medium"],["Design Phone Directory","Medium"],["Encode/Decode TinyURL","Medium"],["Stream of Characters","Hard"]
+  ]},
+  {day:96,topic:"Competitive — Mock Interview 3",tag:"Mixed",qs:[
+    ["Minimum Interval to Include Each Query","Hard"],["Maximum Frequency Stack","Hard"],["Maximum Score from Performing Multiplication","Hard"],["Minimum Difficulty of Job Schedule","Hard"],["Number of Ways to Reorder Array to Get Same BST","Hard"]
+  ]},
+  {day:97,topic:"Competitive — Mock Interview 4",tag:"Mixed",qs:[
+    ["Longest Valid Parentheses","Hard"],["Find in Mountain Array","Hard"],["Number of Digit One","Hard"],["Dungeon Game","Hard"],["Maximal Rectangle","Hard"]
+  ]},
+  {day:98,topic:"Competitive — Mock Interview 5",tag:"Mixed",qs:[
+    ["Largest Color Value in Directed Graph","Hard"],["Maximum Profit in Job Scheduling","Hard"],["Count Vowels Permutation","Hard"],["Build Array Where You Can Find Max Exactly K Comparisons","Hard"],["Minimum Moves to Reach Target with Rotations","Hard"]
+  ]},
+  {day:99,topic:"System Design Coding",tag:"Design",qs:[
+    ["Design Rate Limiter (Token Bucket)","Hard"],["Design Distributed Cache","Hard"],["Consistent Hashing Implementation","Hard"],["Design URL Shortener","Hard"],["Design Leaderboard","Medium"]
+  ]},
+  {day:100,topic:"Grand Finale — All Patterns",tag:"Mixed",qs:[
+    ["Alien Dictionary","Hard"],["Find Median from Data Stream","Hard"],["Word Search II","Hard"],["Serialize Binary Tree","Hard"],["Trapping Rain Water","Hard"]
+  ]}
+];
+
+const TAG_COLORS = {
+  "Arrays": ["#E6F1FB","#042C53"],
+  "Strings": ["#E1F5EE","#04342C"],
+  "Hashing": ["#FAEEDA","#412402"],
+  "Linked List": ["#FBEAF0","#4B1528"],
+  "Stack & Queue": ["#EEEDFE","#26215C"],
+  "Trees": ["#EAF3DE","#173404"],
+  "Graphs": ["#FAECE7","#4A1B0C"],
+  "DP": ["#FAC775","#412402"],
+  "Heap": ["#B5D4F4","#042C53"],
+  "Backtracking": ["#F4C0D1","#4B1528"],
+  "Greedy": ["#C0DD97","#173404"],
+  "Bit Manipulation": ["#D3D1C7","#2C2C2A"],
+  "Math": ["#F0997B","#4A1B0C"],
+  "Recursion": ["#AFA9EC","#26215C"],
+  "Design": ["#9FE1CB","#04342C"],
+  "Advanced DS": ["#FAC775","#633806"],
+  "Mixed": ["#F1EFE8","#2C2C2A"]
+};
+
+function tagStyle(tag) {
+  const c = TAG_COLORS[tag] || ["#F1EFE8","#2C2C2A"];
+  return `background:${c[0]};color:${c[1]};`;
+}
+
+function diffClass(d) {
+  if(d==="Easy") return "diff-easy";
+  if(d==="Medium") return "diff-medium";
+  return "diff-hard";
+}
+
+let currentFilter = "all";
+let allExpanded = false;
+
+function render(days) {
+  const container = document.getElementById("plan-container");
+  if(days.length === 0) {
+    container.innerHTML = '<div class="no-results">No results found. Try a different search or filter.</div>';
+    return;
+  }
+
+  let html = "";
+  let weekDays = [];
+  let weekNum = 1;
+
+  const flush = () => {
+    if(weekDays.length === 0) return;
+    html += `<div class="week-group"><div class="week-label">Week ${weekNum} — Days ${weekDays[0].day}–${weekDays[weekDays.length-1].day}</div>`;
+    weekDays.forEach(d => {
+      html += `<div class="day-card" data-day="${d.day}">
+        <div class="day-header" onclick="toggleDay(${d.day})">
+          <span class="day-num">Day ${d.day}</span>
+          <span class="day-topic">${d.topic}</span>
+          <span class="day-tag topic-pill" style="${tagStyle(d.tag)}">${d.tag}</span>
+          <i class="ti ti-chevron-down chevron" id="chev-${d.day}" aria-hidden="true"></i>
+        </div>
+        <div class="day-body" id="body-${d.day}">
+          <ul class="q-list">
+            ${d.qs.map((q,i) => `<li class="q-item">
+              <span class="q-num">${i+1}.</span>
+              <span class="q-text">${q[0]}</span>
+              <span class="q-diff ${diffClass(q[1])}">${q[1]}</span>
+            </li>`).join("")}
+          </ul>
+        </div>
+      </div>`;
+    });
+    html += `</div>`;
+    weekDays = [];
+    weekNum++;
+  };
+
+  days.forEach((d, i) => {
+    const relWeek = Math.floor(i / 7);
+    if(weekDays.length > 0 && relWeek !== Math.floor((i-1)/7)) flush();
+    weekDays.push(d);
+  });
+  flush();
+
+  container.innerHTML = html;
+  document.getElementById("result-count").textContent = `Showing ${days.length} of 100 days`;
+}
+
+window.toggleDay = function(day) {
+  const body = document.getElementById("body-" + day);
+  const chev = document.getElementById("chev-" + day);
+  if(body.classList.contains("open")) {
+    body.classList.remove("open");
+    chev.style.transform = "";
+  } else {
+    body.classList.add("open");
+    chev.style.transform = "rotate(180deg)";
+  }
+};
+
+function getFilteredDays() {
+  let days = DAYS;
+  const q = document.getElementById("searchBox").value.toLowerCase().trim();
+  if(currentFilter !== "all") days = days.filter(d => d.tag === currentFilter);
+  if(q) days = days.filter(d =>
+    d.topic.toLowerCase().includes(q) ||
+    d.tag.toLowerCase().includes(q) ||
+    String(d.day).includes(q) ||
+    d.qs.some(qr => qr[0].toLowerCase().includes(q))
+  );
+  return days;
+}
+
+document.querySelectorAll(".filter-btn").forEach(btn => {
+  btn.addEventListener("click", () => {
+    document.querySelectorAll(".filter-btn").forEach(b => b.classList.remove("active"));
+    btn.classList.add("active");
+    currentFilter = btn.dataset.filter;
+    render(getFilteredDays());
+  });
+});
+
+document.getElementById("searchBox").addEventListener("input", () => render(getFilteredDays()));
+
+document.getElementById("expandAllBtn").addEventListener("click", () => {
+  allExpanded = !allExpanded;
+  document.querySelectorAll(".day-body").forEach(b => {
+    if(allExpanded) b.classList.add("open");
+    else b.classList.remove("open");
+  });
+  document.querySelectorAll(".chevron").forEach(c => {
+    c.style.transform = allExpanded ? "rotate(180deg)" : "";
+  });
+  document.getElementById("expandAllBtn").textContent = allExpanded ? "Collapse all" : "Expand all";
+});
+
+const easyC = DAYS.reduce((a,d) => a + d.qs.filter(q=>q[1]==="Easy").length, 0);
+const medC = DAYS.reduce((a,d) => a + d.qs.filter(q=>q[1]==="Medium").length, 0);
+const hardC = DAYS.reduce((a,d) => a + d.qs.filter(q=>q[1]==="Hard").length, 0);
+document.getElementById("easy-count").textContent = `${easyC}/${medC}/${hardC}`;
+
+render(DAYS);
+</script>

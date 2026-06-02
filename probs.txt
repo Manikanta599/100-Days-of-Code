@@ -1,0 +1,415 @@
+
+Phase 1 — Arrays, Strings, Hashing (Days 1–20)
+Day 1
+Two Sum
+Contains Duplicate
+Valid Anagram
+Day 2
+Group Anagrams
+Top K Frequent Elements
+Product of Array Except Self
+Day 3
+Valid Sudoku
+Encode and Decode Strings
+Longest Consecutive Sequence
+Day 4
+Best Time to Buy and Sell Stock
+Maximum Subarray
+Maximum Product Subarray
+Day 5
+Find Minimum in Rotated Sorted Array
+Search in Rotated Sorted Array
+3Sum
+Day 6
+Container With Most Water
+Trapping Rain Water
+Move Zeroes
+Day 7
+Longest Substring Without Repeating Characters
+Longest Repeating Character Replacement
+Minimum Window Substring
+Day 8
+Valid Palindrome
+Two Sum II
+Palindromic Substrings
+Day 9
+Longest Palindromic Substring
+Permutation in String
+Find All Anagrams in a String
+Day 10
+Sliding Window Maximum
+Daily Temperatures
+Car Fleet
+Day 11
+Evaluate Reverse Polish Notation
+Generate Parentheses
+Valid Parentheses
+Day 12
+Min Stack
+Baseball Game
+Backspace String Compare
+Day 13
+Remove Duplicates from Sorted Array
+Merge Sorted Array
+Sort Colors
+Day 14
+Majority Element
+Rotate Array
+Missing Number
+Day 15
+Happy Number
+Intersection of Two Arrays
+Isomorphic Strings
+Day 16
+Ransom Note
+Word Pattern
+Reverse String
+Day 17
+Reverse Words in a String
+String Compression
+Zigzag Conversion
+Day 18
+Roman to Integer
+Integer to Roman
+Length of Last Word
+Day 19
+Implement strStr()
+Add Binary
+Plus One
+Day 20
+Pascal Triangle
+Summary Ranges
+Merge Intervals
+
+
+
+Phase 2 — Linked List, Stack, Queue (Days 21–35)
+Day 21
+Reverse Linked List
+Merge Two Sorted Lists
+Linked List Cycle
+Day 22
+Reorder List
+Remove Nth Node From End
+Copy List with Random Pointer
+Day 23
+Add Two Numbers
+Find Duplicate Number
+LRU Cache
+Day 24
+Implement Queue using Stacks
+Implement Stack using Queues
+Design Circular Queue
+Day 25
+Binary Search
+Search Insert Position
+Guess Number Higher or Lower
+Day 26
+First Bad Version
+Sqrt(x)
+Peak Index in Mountain Array
+Day 27
+Koko Eating Bananas
+Capacity To Ship Packages Within D Days
+Time Based Key Value Store
+Day 28
+Search a 2D Matrix
+Median of Two Sorted Arrays
+Single Element in Sorted Array
+Day 29
+Find Peak Element
+Search in Rotated Sorted Array II
+Split Array Largest Sum
+Day 30
+Implement Trie
+Design Add and Search Words Data Structure
+Word Search
+Day 31
+Word Search II
+Longest Common Prefix
+Implement Prefix Tree
+Day 32
+Kth Largest Element in Array
+Last Stone Weight
+K Closest Points to Origin
+Day 33
+Task Scheduler
+Design Twitter
+Find Median from Data Stream
+Day 34
+Merge K Sorted Lists
+Smallest Number in Infinite Set
+Seat Reservation Manager
+Day 35
+Number of Recent Calls
+Dota2 Senate
+Asteroid Collision
+
+
+Phase 3 — Trees & BST (Days 36–55)
+Day 36
+Invert Binary Tree
+Maximum Depth of Binary Tree
+Diameter of Binary Tree
+Day 37
+Balanced Binary Tree
+Same Tree
+Subtree of Another Tree
+Day 38
+Lowest Common Ancestor of BST
+Binary Tree Level Order Traversal
+Binary Tree Right Side View
+Day 39
+Count Good Nodes in Binary Tree
+Validate Binary Search Tree
+Kth Smallest Element in BST
+Day 40
+Construct Binary Tree from Preorder and Inorder
+Binary Tree Zigzag Level Order Traversal
+Serialize and Deserialize Binary Tree
+Day 41
+Path Sum
+Path Sum II
+Maximum Path Sum
+Day 42
+Symmetric Tree
+Convert Sorted Array to BST
+Minimum Absolute Difference in BST
+Day 43
+House Robber III
+Flatten Binary Tree to Linked List
+Populating Next Right Pointers
+Day 44
+Count Complete Tree Nodes
+Sum Root to Leaf Numbers
+Binary Tree Paths
+Day 45
+N-ary Tree Preorder Traversal
+N-ary Tree Level Order Traversal
+Cousins in Binary Tree
+Day 46
+Clone Graph
+Number of Islands
+Max Area of Island
+Day 47
+Pacific Atlantic Water Flow
+Surrounded Regions
+Rotting Oranges
+Day 48
+Course Schedule
+Course Schedule II
+Graph Valid Tree
+Day 49
+Redundant Connection
+Number of Connected Components
+Accounts Merge
+Day 50
+Network Delay Time
+Reconstruct Itinerary
+Min Cost to Connect All Points
+Day 51
+Word Ladder
+Open the Lock
+Cheapest Flights Within K Stops
+Day 52
+Path with Maximum Probability
+Evaluate Division
+Alien Dictionary
+Day 53
+Detect Cycle in Graph
+Bipartite Graph
+Shortest Path in Binary Matrix
+Day 54
+Flood Fill
+Walls and Gates
+Snakes and Ladders
+Day 55
+Graph BFS Traversal
+Graph DFS Traversal
+Dijkstra Algorithm
+
+
+Phase 4 — Heap, Greedy, Backtracking (Days 56–75)
+Day 56
+Combination Sum
+Combination Sum II
+Permutations
+Day 57
+Subsets
+Subsets II
+Letter Combinations of Phone Number
+Day 58
+Palindrome Partitioning
+N Queens
+Word Break
+Day 59
+Jump Game
+Jump Game II
+Gas Station
+Day 60
+Hand of Straights
+Merge Triplets to Form Target Triplet
+Partition Labels
+Day 61
+Valid Parenthesis String
+Candy
+Non-overlapping Intervals
+Day 62
+Insert Interval
+Meeting Rooms
+Meeting Rooms II
+Day 63
+Minimum Number of Arrows to Burst Balloons
+Queue Reconstruction by Height
+Task Assignment
+Day 64
+Rotate Image
+Spiral Matrix
+Set Matrix Zeroes
+Day 65
+Happy Number
+Pow(x, n)
+Multiply Strings
+Day 66
+Detect Squares
+Random Pick with Weight
+Find K Closest Elements
+Day 67
+Min Cost Climbing Stairs
+House Robber
+House Robber II
+Day 68
+Coin Change
+Coin Change II
+Target Sum
+Day 69
+Longest Increasing Subsequence
+Partition Equal Subset Sum
+Unique Paths
+Day 70
+Decode Ways
+Climbing Stairs
+Frog Jump
+Day 71
+Word Break II
+Edit Distance
+Distinct Subsequences
+Day 72
+Burst Balloons
+Regular Expression Matching
+Interleaving String
+Day 73
+Best Time to Buy and Sell Stock with Cooldown
+Best Time to Buy and Sell Stock with Transaction Fee
+Best Time to Buy and Sell Stock III
+Day 74
+Maximum Alternating Subsequence Sum
+Longest Common Subsequence
+Uncrossed Lines
+Day 75
+Delete and Earn
+Integer Break
+Perfect Squares
+
+
+Phase 5 — Advanced Revision + Interview Practice (Days 76–100)
+Day 76
+Median of Two Sorted Arrays
+Merge Intervals
+Insert Interval
+Day 77
+LFU Cache
+Design Browser History
+Snapshot Array
+Day 78
+Serialize and Deserialize BST
+Recover Binary Search Tree
+Binary Tree Maximum Path Sum
+Day 79
+Trie Search Suggestions System
+Stream of Characters
+Implement Magic Dictionary
+Day 80
+Distinct Islands
+Shortest Bridge
+Number of Provinces
+Day 81
+Kruskal Algorithm
+Prim Algorithm
+Union Find
+Day 82
+Segment Tree Range Sum Query
+Fenwick Tree
+Range Sum Query Mutable
+Day 83
+Monotonic Stack Daily Temperatures
+Largest Rectangle in Histogram
+Maximal Rectangle
+Day 84
+Sliding Window Maximum
+Minimum Size Subarray Sum
+Fruit Into Baskets
+Day 85
+Reorganize String
+Rearrange Characters
+Frequency Sort
+Day 86
+Top K Frequent Words
+Find Duplicate Files
+Group Shifted Strings
+Day 87
+Longest Valid Parentheses
+Remove Invalid Parentheses
+Score of Parentheses
+Day 88
+Merge Stones
+Super Egg Drop
+Dungeon Game
+Day 89
+Minimum Falling Path Sum
+Cherry Pickup
+Triangle
+Day 90
+Wildcard Matching
+Scramble String
+Palindrome Partitioning II
+Day 91
+Design Hit Counter
+Time Based Key Value Store
+TinyURL Encoder Decoder
+Day 92
+Design Parking System
+Design Underground System
+Design Authentication Manager
+Day 93
+Reverse Nodes in K Group
+Merge K Sorted Lists
+Sort List
+Day 94
+Trapping Rain Water
+Largest Rectangle in Histogram
+Sliding Window Median
+Day 95
+Implement ATOI
+Basic Calculator
+Basic Calculator II
+Day 96
+Expression Add Operators
+Different Ways to Add Parentheses
+Evaluate Reverse Polish Notation
+Day 97
+Count Smaller Numbers After Self
+Reverse Pairs
+Range Sum Query
+Day 98
+LRU Cache
+LFU Cache
+All O`one Data Structure
+Day 99
+Mock Interview Problem 1
+Mock Interview Problem 2
+Mock Interview Problem 3
+Day 100
+Revision of Weak Topics
+Re-solve Hardest Problem
+Build Final DSA Summary Notes
