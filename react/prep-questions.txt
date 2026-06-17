@@ -1,0 +1,304 @@
+
+1. React Fundamentals
+
+Basic Questions
+What is React?
+Why do we use React?
+What are the advantages of React?
+What is a Single Page Application (SPA)?
+What is JSX?
+Can browsers understand JSX directly?
+How is JSX converted into JavaScript?
+What is the Virtual DOM?
+How does Virtual DOM differ from Real DOM?
+What is reconciliation?
+What is the diffing algorithm?
+What are React components?
+Difference between Functional and Class components?
+Why are Functional components preferred nowadays?
+What are props?
+Are props mutable?
+What is state?
+Difference between props and state?
+What happens when state changes?
+What is conditional rendering?
+
+
+2. Component Lifecycle & Rendering
+Important Questions
+
+What causes a React component to re-render?
+What is the rendering process in React?
+What is the mounting phase?
+What is the updating phase?
+What is the unmounting phase?
+How were lifecycle methods used in class components?
+Which lifecycle methods correspond to useEffect?
+What happens when a component unmounts?
+How do you perform cleanup in React?
+What problems occur if cleanup is not done?
+
+
+3. Hooks (Very Important)
+
+
+useState
+What is useState?
+Why is state update asynchronous?
+Explain batching in React.
+Difference between:
+setCount(count + 1);
+setCount(count + 1);
+
+and
+
+setCount(prev => prev + 1);
+setCount(prev => prev + 1);
+Can state updates be mutated directly?
+useEffect
+What is useEffect?
+Why do we use useEffect?
+Explain dependency arrays.
+Difference between:
+useEffect(() => {})
+useEffect(() => {}, [])
+useEffect(() => {}, [count])
+When does cleanup execute?
+Common mistakes with useEffect?
+Can useEffect be async?
+useRef
+What is useRef?
+Difference between useRef and useState?
+Why doesn't updating ref trigger re-render?
+Real-world uses of useRef?
+useMemo
+What is useMemo?
+Why use useMemo?
+When should you avoid useMemo?
+Explain memoization.
+useCallback
+What is useCallback?
+Difference between useMemo and useCallback?
+Why can functions cause unnecessary renders?
+When should useCallback be used?
+Custom Hooks
+What are custom hooks?
+Why create custom hooks?
+Have you built any custom hooks?
+Explain a custom hook you implemented.
+
+
+4. React Performance Optimization
+
+These are frequently asked for 2+ years experience.
+
+What is React.memo?
+How does React.memo work?
+Difference between React.memo and useMemo?
+What causes unnecessary re-renders?
+How do you identify re-render issues?
+What is code splitting?
+Explain lazy loading.
+How does React.lazy() work?
+What is Suspense?
+Explain bundle optimization.
+What is tree shaking?
+How do you improve React application performance?
+
+5. Forms
+Controlled components.
+Uncontrolled components.
+Difference between them.
+How do you handle forms in React?
+How do you validate forms?
+Have you used React Hook Form?
+Why is React Hook Form faster?
+Explain Formik vs React Hook Form.
+How do you handle dynamic forms?
+
+6. Event Handling
+How are events handled in React?
+What is Synthetic Event?
+Difference between React events and DOM events?
+Event bubbling?
+Event capturing?
+How do you stop propagation?
+What is event delegation?
+
+
+7. State Management
+Context API
+
+What is Context API?
+Why use Context?
+Problems with Context API?
+When should Context not be used?
+Redux
+Why Redux?
+What problem does Redux solve?
+Explain Redux flow.
+What is a reducer?
+What are actions?
+What is a store?
+What is dispatch?
+What is middleware?
+What is Redux Toolkit?
+Why Redux Toolkit over Redux?
+What is createSlice?
+What is configureStore?
+What is createAsyncThunk?
+Explain Redux DevTools.
+How do you persist Redux state?
+
+
+8. Routing
+What is React Router?
+Difference between BrowserRouter and HashRouter?
+What are routes?
+Explain nested routes.
+What is Outlet?
+What is useNavigate?
+What is useParams?
+What is useLocation?
+Protected routes?
+Role-based routing?
+
+
+9. API Handling
+
+How do you call APIs in React?
+Why use Axios instead of fetch?
+Fetch vs Axios?
+How do you handle loading states?
+How do you handle errors?
+How do you cancel API requests?
+What is AbortController?
+How do you avoid race conditions?
+How do you handle retries?
+Explain API interceptors.
+
+
+10. Authentication & Authorization
+JWT authentication flow.
+Where should JWT be stored?
+LocalStorage vs Cookies?
+Why are HttpOnly cookies preferred?
+What is Refresh Token?
+Access Token vs Refresh Token?
+How do you implement logout?
+How do you protect routes?
+What is role-based access?
+Explain authentication flow in React.
+
+
+11. TypeScript with React
+Why TypeScript?
+Props typing?
+State typing?
+Event typing?
+Generic components?
+Interface vs Type?
+Typing custom hooks?
+Typing API responses?
+How do you type refs?
+Benefits of TypeScript in React?
+
+
+12. React 18 (Very Important)
+What's new in React 18?
+What is Concurrent Rendering?
+What is automatic batching?
+What is createRoot?
+What is useTransition?
+What is useDeferredValue?
+Why were these introduced?
+What problem do they solve?
+
+
+13. Testing
+What is React Testing Library?
+Why not test implementation details?
+What is Jest?
+Difference between RTL and Jest?
+What is mocking?
+How do you test API calls?
+What queries are available in RTL?
+How do you test async components?
+What is snapshot testing?
+
+
+14. Advanced React
+Higher Order Components (HOC)?
+Render Props?
+Compound Components?
+Portals?
+Error Boundaries?
+What problems do Error Boundaries solve?
+Forward Ref?
+useImperativeHandle?
+What are fragments?
+How does React Context internally work?
+Explain React Fiber.
+What is hydration?
+SSR vs CSR?
+SSG vs SSR?
+Explain reconciliation deeply.
+Why are keys important?
+Why shouldn't array index be used as key?
+Explain React's rendering algorithm.
+
+
+15. Scenario-Based Questions (Most Important)
+
+Your component is re-rendering unnecessarily. How would you debug it?
+A large list is slow. How would you optimize it?
+Parent re-renders causing child re-renders. How do you fix it?
+API is called multiple times unexpectedly. Why?
+User loses form data on refresh. How do you solve it?
+How would you implement infinite scrolling?
+How would you implement search with debouncing?
+How would you implement file uploads?
+How would you implement dark mode?
+How would you build a reusable modal?
+How would you implement role-based menus?
+How would you optimize bundle size?
+How would you handle global errors?
+How would you structure a large React project?
+How would you secure authentication tokens?
+How would you implement optimistic UI updates?
+How would you handle real-time updates?
+How would you implement drag and drop?
+Describe the most challenging React problem you solved.
+Explain an end-to-end React feature you built in production.
+
+
+16. Questions You Should Be Able to Answer From Your Experience
+
+Interviewers often ask:
+
+Describe your current React project architecture.
+How many users use your application?
+How do you organize components?
+How do you manage state?
+Which performance optimizations have you implemented?
+How do you deploy React applications?
+Have you handled production bugs? Explain one.
+Describe a feature you owned from start to finish.
+How do frontend and backend teams collaborate?
+If you had to redesign your current React application, what would you improve?
+High-Priority Topics for a 2-Year React Developer
+
+If you have limited time, focus heavily on these:
+
+Hooks (useState, useEffect, useRef, useMemo, useCallback)
+Component lifecycle and re-rendering
+React.memo and performance optimization
+Context API and Redux Toolkit
+React Router
+API integration with Axios/Fetch
+JWT authentication and protected routes
+TypeScript with React
+React 18 features
+Error Boundaries and Portals
+Scenario-based optimization questions
+Explaining real projects and production issues confidently.

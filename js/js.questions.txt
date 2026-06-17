@@ -1,0 +1,342 @@
+1. JavaScript Fundamentals
+What is JavaScript?
+Is JavaScript interpreted or compiled?
+What are the data types in JavaScript?
+Difference between primitive and non-primitive data types.
+What is typeof?
+What is undefined?
+What is null?
+Difference between null and undefined.
+What is NaN?
+Why is typeof null equal to "object"?
+What are variables?
+Difference between var, let, and const.
+Can const objects be modified?
+What is variable shadowing?
+What is hoisting?
+What gets hoisted?
+What is the Temporal Dead Zone (TDZ)?
+What is strict mode?
+What is type coercion?
+Difference between implicit and explicit coercion.
+
+
+2. Operators and Comparisons
+
+Difference between == and ===.
+Explain:
+[] == false
+Explain:
+null == undefined
+Explain:
+NaN == NaN
+Difference between Object.is() and ===.
+Explain truthy and falsy values.
+What are short-circuit operators?
+Difference between || and ??.
+What does !!value do?
+Explain optional chaining (?.).
+
+3. Functions
+What are functions?
+Function declaration vs function expression.
+What are arrow functions?
+Differences between arrow functions and normal functions.
+Can arrow functions be constructors?
+What is the arguments object?
+Default parameters.
+Rest parameters.
+Spread operator.
+What are higher-order functions?
+What are callback functions?
+What are first-class functions?
+What are pure functions?
+What are impure functions?
+What is function composition?
+
+
+4. Scope and Closures
+What is scope?
+Global scope.
+Function scope.
+Block scope.
+Lexical scope.
+What is a closure?
+Why are closures useful?
+Real-world examples of closures.
+Explain this output:
+for (var i = 0; i < 3; i++) {
+  setTimeout(() => console.log(i), 0);
+}
+How does let fix the above problem?
+Can closures cause memory leaks?
+
+
+5. Objects
+How do you create objects?
+Dot notation vs bracket notation.
+How do you iterate over object properties?
+Object.keys()
+Object.values()
+Object.entries()
+Difference between shallow copy and deep copy.
+Ways to clone objects.
+What is structuredClone()?
+Object.assign()
+What is object destructuring?
+Nested destructuring.
+What is property shorthand?
+Computed properties.
+
+6. Arrays
+Difference between map and forEach.
+filter
+reduce
+find
+findIndex
+some
+every
+includes
+flat
+flatMap
+splice vs slice
+push vs concat
+How do you remove duplicates?
+Sort arrays.
+Custom sorting.
+Difference between mutable and immutable methods.
+What is array destructuring?
+How do arrays work internally?
+
+
+7. Strings
+Common string methods.
+Reverse a string.
+Check palindrome.
+Find character frequency.
+Find first non-repeating character.
+Trim methods.
+Template literals.
+Tagged template literals.
+Difference between substring, substr, and slice.
+
+8. Asynchronous JavaScript
+What is synchronous programming?
+What is asynchronous programming?
+What are callbacks?
+Callback hell.
+What are Promises?
+Promise states.
+Promise chaining.
+Promise error handling.
+Difference between .then() and .catch().
+What is .finally()?
+What is async/await?
+How does async/await work internally?
+Error handling with async/await.
+Sequential vs parallel execution.
+Promise.all
+Promise.allSettled
+Promise.race
+Promise.any
+When should each be used?
+
+
+9. Event Loop (Extremely Important)
+What is the Event Loop?
+What is the Call Stack?
+What is the Callback Queue?
+What is the Microtask Queue?
+Priority of microtasks vs macrotasks.
+Explain this output:
+console.log(1);
+
+setTimeout(() => console.log(2));
+
+Promise.resolve().then(() => console.log(3));
+
+console.log(4);
+Difference between setTimeout and Promises.
+What are macrotasks?
+What are microtasks?
+
+
+10. The this Keyword
+What is this?
+How is this determined?
+this in global scope.
+this inside objects.
+this in normal functions.
+this in arrow functions.
+Explain explicit binding.
+call
+apply
+bind
+Differences among them.
+Implement your own bind.
+
+
+11. Prototypes and Inheritance
+What is a prototype?
+Prototype chain.
+Prototypal inheritance.
+__proto__ vs prototype.
+Constructor functions.
+ES6 classes.
+Class inheritance.
+super.
+Static methods.
+How do classes work internally?
+Is JavaScript object-oriented?
+
+12. Modules
+What are modules?
+Why use modules?
+CommonJS vs ES Modules.
+require vs import.
+Named exports.
+Default exports.
+Dynamic imports.
+Tree shaking.
+
+
+13. Browser Concepts
+What is the DOM?
+DOM vs Virtual DOM.
+Event bubbling.
+Event capturing.
+Event delegation.
+preventDefault
+stopPropagation
+LocalStorage.
+SessionStorage.
+Cookies.
+Differences among them.
+What is CORS?
+Same-Origin Policy.
+Debouncing.
+Throttling.
+
+
+14. Memory Management
+Stack memory.
+Heap memory.
+Garbage collection.
+Memory leaks.
+Common causes of memory leaks.
+Closures and memory leaks.
+Detached DOM nodes.
+
+15. Advanced JavaScript
+What are generators?
+What are iterators?
+Symbols.
+BigInt.
+WeakMap.
+WeakSet.
+Map vs Object.
+Set vs Array.
+Reflect API.
+Proxy.
+Currying.
+Partial application.
+Memoization.
+Function chaining.
+Composition.
+Tail recursion.
+Optional chaining internals.
+
+
+16. JavaScript Internals
+What happens when JavaScript code executes?
+Execution Context.
+Global Execution Context.
+Function Execution Context.
+Lexical Environment.
+Scope Chain.
+Variable Environment.
+How is memory allocated?
+How does hoisting actually work?
+How does the Event Loop interact with the Call Stack?
+How are closures implemented?
+How does V8 optimize JavaScript?
+
+
+17. Output-Based Questions (Very Common)
+
+Explain the output:
+
+console.log(typeof null);
+console.log(NaN === NaN);
+console.log([] + []);
+console.log([] + {});
+console.log({} + []);
+console.log(0 == false);
+console.log("" == false);
+console.log("5" - 2);
+console.log("5" + 2);
+console.log(1 < 2 < 3);
+console.log(3 > 2 > 1);
+console.log(typeof typeof 1);
+console.log([] === []);
+console.log({} === {});
+
+
+
+18. Coding Questions (Frequently Asked)
+Reverse a string.
+Check palindrome.
+FizzBuzz.
+Find factorial.
+Fibonacci series.
+Remove duplicates from array.
+Flatten nested arrays.
+Find maximum occurring character.
+Find first non-repeating character.
+Group objects by property.
+Deep clone an object.
+Implement debounce.
+Implement throttle.
+Implement Promise.all.
+Implement Array.prototype.map.
+Implement Array.prototype.filter.
+Implement Array.prototype.reduce.
+Implement Function.prototype.bind.
+Find missing number.
+Longest substring without repeating characters.
+Merge intervals.
+Two Sum.
+Move zeros to the end.
+
+
+19. Scenario-Based Questions
+Why is your application slow?
+How would you optimize JavaScript performance?
+How would you handle thousands of API requests?
+When would you use debounce vs throttle?
+How would you avoid callback hell?
+How would you prevent memory leaks?
+How would you design a retry mechanism for API calls?
+How would you cache expensive computations?
+How would you secure tokens in the browser?
+Explain a JavaScript bug you fixed in production.
+High-Priority Topics for a 2-Year Developer
+
+If you have limited time, master these first:
+
+var, let, const
+Hoisting and TDZ
+Closures
+Scope and lexical environment
+this, call, apply, bind
+Arrays (map, filter, reduce)
+Promises and async/await
+Event Loop, Call Stack, Microtask Queue
+Prototypes and inheritance
+Debounce and throttle
+LocalStorage, SessionStorage, Cookies
+Output-based questions
+Implementing polyfills (map, filter, reduce, bind)
+Small coding problems like Two Sum, flatten array, remove duplicates, and longest substring without repeating characters.
+
+

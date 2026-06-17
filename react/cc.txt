@@ -1,0 +1,458 @@
+1. Counter
+
+Build a counter with increment and decrement buttons.
+
+Expected skills:
+
+useState
+Event handling
++ Increment
+- Decrement
+Count: 0
+
+Sometimes they ask:
+
+Why does this print 1 instead of 2?
+
+setCount(count + 1);
+setCount(count + 1);
+2. Todo App
+
+Build a simple todo app.
+
+Features:
+
+Add todo
+Delete todo
+Mark complete
+Edit todo
+
+Checks:
+
+State updates
+List rendering
+Keys
+Array methods
+3. Search Filter
+
+Given:
+
+const users = [
+  "John",
+  "Alice",
+  "Bob",
+  "David"
+];
+
+Filter as user types.
+
+Example:
+
+Input: bo
+Output:
+Bob
+
+Checks:
+
+Controlled inputs
+filter()
+Case-insensitive search
+4. Debounced Search
+
+Very common.
+
+Ask:
+
+Call API only after user stops typing for 500ms.
+
+Checks:
+
+useEffect
+setTimeout
+Cleanup
+
+Example:
+
+J
+Jo
+Joh
+John
+
+Only "John" triggers API.
+5. Reverse String
+
+JavaScript logic.
+
+reverse("hello")
+
+Output:
+
+"olleh"
+
+Possible solutions:
+
+str.split("").reverse().join("")
+
+or manually.
+
+6. Palindrome Check
+isPalindrome("madam")
+
+Output:
+
+true
+
+Checks:
+
+String manipulation
+Two pointers
+7. Remove Duplicates
+
+Input:
+
+[1,2,2,3,4,4]
+
+Output:
+
+[1,2,3,4]
+
+Using:
+
+new Set(arr)
+
+or loops.
+
+8. Frequency Counter
+
+Input:
+
+["apple","banana","apple"]
+
+Output:
+
+{
+  apple: 2,
+  banana: 1
+}
+
+Checks:
+
+Objects
+Reduce
+9. Flatten Array
+
+Input:
+
+[1,[2,[3,4]]]
+
+Output:
+
+[1,2,3,4]
+
+Checks recursion.
+
+10. Group By
+
+Input:
+
+[
+  {name:"A", dept:"IT"},
+  {name:"B", dept:"HR"},
+  {name:"C", dept:"IT"}
+]
+
+Output:
+
+{
+  IT:[...],
+  HR:[...]
+}
+
+Very common.
+
+11. Sort Table
+
+Build a table.
+
+Features:
+
+Click header
+Sort ascending
+Sort descending
+
+Checks:
+
+Array sorting
+State
+12. Pagination
+
+Display:
+
+10 items/page
+Previous
+Next
+
+Checks:
+
+Slicing arrays
+array.slice(start, end)
+13. Infinite Scroll
+
+Asked surprisingly often.
+
+Requirements:
+
+Load more data when reaching bottom.
+
+Checks:
+
+Scroll events
+API handling
+State management
+14. Modal Component
+
+Build reusable modal.
+
+Features:
+
+Open
+Close
+ESC closes modal
+Click outside closes modal
+
+Checks:
+
+Reusability
+Cleanup
+15. Tabs Component
+
+Example:
+
+Profile
+Settings
+Billing
+
+Switch content on click.
+
+Checks:
+
+Conditional rendering
+16. Accordion
+
+Example:
+
+Q1 +
+Q2 +
+Q3 +
+
+Click:
+
+Q1 -
+Answer...
+
+Checks:
+
+State management
+17. Progress Bar
+
+Input:
+
+30%
+
+Output:
+
+██████------ 30%
+
+Checks:
+
+Styling
+Dynamic updates
+18. Star Rating
+
+Example:
+
+★★★★★
+
+Requirements:
+
+Hover effect
+Click to select
+
+Checks:
+
+Event handling
+19. Stopwatch / Timer
+
+Features:
+
+Start
+Pause
+Reset
+
+Checks:
+
+setInterval
+Cleanup
+
+Very popular.
+
+20. OTP Input
+
+Example:
+
+_ _ _ _
+
+Requirements:
+
+Auto-focus next input
+Backspace moves previous
+
+Checks:
+
+useRef
+Keyboard events
+21. File Upload Preview
+
+Requirements:
+
+Upload image
+Show preview
+
+Checks:
+
+URL.createObjectURL()
+22. Drag and Drop List
+
+Requirements:
+
+Reorder items.
+
+Checks:
+
+Events
+State updates
+
+Sometimes they allow libraries.
+
+23. Implement useDebounce Hook
+
+Example:
+
+const debouncedValue = useDebounce(value, 500);
+
+Checks:
+
+Custom hooks
+Cleanup
+24. Implement useLocalStorage Hook
+
+Example:
+
+const [theme, setTheme] =
+useLocalStorage("theme", "light");
+
+Checks:
+
+Custom hooks
+Local storage
+25. Memoization Problem
+
+Parent:
+
+<Child onClick={handleClick} />
+
+Ask:
+
+Child is re-rendering unnecessarily. Fix it.
+
+Expected:
+
+useCallback()
+React.memo()
+26. Find Missing Number
+
+Input:
+
+[1,2,4,5]
+
+Output:
+
+3
+
+Checks:
+
+Basic logic
+27. First Non-Repeating Character
+
+Input:
+
+"swiss"
+
+Output:
+
+"w"
+
+Common JS question.
+
+28. Longest Substring Without Repeating Characters
+
+Input:
+
+"abcabcbb"
+
+Output:
+
+3
+
+Checks:
+
+Sliding window
+
+Medium difficulty.
+
+29. Deep Clone Object
+
+Ask:
+
+How do you clone nested objects?
+
+Expected discussion:
+
+structuredClone(obj)
+
+or limitations of:
+
+JSON.parse(JSON.stringify(obj))
+30. Explain the Output
+
+Very common.
+
+Example:
+
+console.log([] == false);
+console.log([] === false);
+console.log(typeof null);
+console.log(1 + "2" + 3);
+console.log(1 + 2 + "3");
+
+They check JavaScript fundamentals.
+
+Most Frequently Asked (2 Years React)
+
+If you're preparing for interviews soon, these are the ones I'd prioritize:
+
+Todo App
+Search + Filter
+Debounced Search
+Modal Component
+Tabs/Accordion
+Stopwatch
+OTP Input
+Custom useDebounce
+useLocalStorage
+Sort + Pagination Table
+Counter batching (setCount)
+Parent-child re-render optimization
+Reverse String / Palindrome
+Remove Duplicates / Frequency Counter
+Longest Substring Without Repeating Characters
