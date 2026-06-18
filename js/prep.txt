@@ -1,0 +1,157 @@
+What is JavaScript?
+--> js is a high level, single threaded,dynamically typed programming language primarily used to make web pages interactive. It runs in browsers and also on servers through Node.js.
+--> It supports multiple programming paradigms such as procedural, object-oriented, and functional programming.
+-->  Today, JavaScript is used to build frontend applications, backend APIs, real-time applications, and even mobile apps.
+
+What do you mean by single-threaded?
+It means JavaScript executes one piece of code at a time using a single call stack. However, asynchronous operations are handled efficiently through the Event Loop.
+
+
+Is JavaScript interpreted or compiled?
+
+JavaScript is neither purely interpreted nor purely compiled. because Modern JavaScript engines like V8 use Just-In-Time (JIT) compilation.
+The engine first parses the code, compiles it into bytecode, and then frequently executed code is optimized into machine code for better performance.
+
+
+function add(a, b) {
+    return a + b;
+}
+
+JavaScript Code
+      ↓
+Parser  (checks syntax errors and creates an Abstract Syntax Tree (AST)) like 
+                                            FunctionDeclaration
+                                             ├─ Name: add
+                                             ├─ Parameter: a
+                                             ├─ Parameter: b
+                                             └─ ReturnStatement
+                                                 └─ BinaryExpression (+)
+      ↓
+Bytecode (The AST is converted into bytecode, which is a lower-level set of instructions for the JavaScript engine.)
+                Load a
+                Load b
+                Add
+                Return
+      ↓
+JIT Compiler (Initially, bytecode is interpreted.If the engine notices that a function runs many times, it assumes this code is "hot" and compiles it into highly optimized machine code.)
+      ↓
+Machine Code
+      ↓
+CPU Executes
+
+==============================================
+What is V8?
+V8 is Google's JavaScript engine used in Chrome and Node.js. It executes JavaScript by converting it into machine code using JIT compilation, making JavaScript applications run efficiently.
+Why is Node.js fast?
+One reason is that Node.js uses the V8 engine, which optimizes JavaScript execution through JIT compilation and machine-code generation.
+===============================
+
+What are the data types in JavaScript?
+JavaScript data types are broadly classified into Primitive and Non-Primitive (Reference) types.
+seven primitive data types
+String
+Number
+Boolean
+Undefined        SNBUNSB
+Null
+Symbol
+BigInt
+
+Non-Primitive
+Object
+Array
+Function
+Date
+Map
+Set
+
+Everything that is not a primitive is essentially an object in JavaScript.
+
+
+How do you check a data type?
+ex: typeof "hello"      // string
+
+
+typeof is a JavaScript unary operator used to determine the data type of a value or variable. It returns the type as a string.
+typeof null == "object"
+This is a historical bug in JavaScript that has been preserved for backward compatibility.
+typeof [] == "object"
+Arrays are a special type of object in JavaScript.
+To check if something is an array:
+Array.isArray([])
+Output: true
+
+
+
+
+Difference Between Primitive and Reference Types?
+copy by value : 
+let a = 10;
+let b = a;
+
+b = 20;
+
+console.log(a); // 10
+
+Copy by reference: 
+let obj1 = { name: "Jay" };
+let obj2 = obj1;
+
+obj2.name = "John";
+
+console.log(obj1.name); // John
+
+JavaScript has seven primitive data types—String, Number, Boolean, Undefined, Null, Symbol, and BigInt—and all other values are objects or reference types. Primitive values are immutable and copied by value, while objects are mutable and copied by reference.
+
+=========================================
+What is undefined?
+undefined is a primitive data type in JavaScript. It represents a variable that has been declared but has not yet been assigned a value. JavaScript automatically assigns undefined in such cases.
+ex: let name;
+console.log(name);  //undefined
+
+When Do We Get undefined?
+     -> Variable declared but not initialized
+     -> . Function does not return anything  
+                function greet() {
+                console.log("Hello");
+                }
+                const result = greet();
+                console.log(result); //undefined
+
+     -> Accessing a non-existing object property
+                const user = {
+                    name: "Jay"
+                };
+            console.log(user.age); //undefined
+     -> Missing function arguments
+                function add(a, b) {
+                    console.log(b);
+                }
+                add(10); //undefined
+    
+
+
+Difference Between undefined and null
+Both undefined and null represent the absence of a value, but they are used differently.
+undefined means a value has not been assigned yet and is usually assigned automatically by JavaScript.
+null means the developer intentionally assigned "no value" to a variable.
+
+null == undefined // true 
+null === undefined //false  Because their types are different.
+
+===============================================================================
+What is null?
+null is a primitive value in JavaScript that represents the intentional absence of a value.
+Unlike undefined, which is assigned automatically by JavaScript, null is explicitly assigned by the developer to indicate that a variable currently has no value.
+
+===============
+
+What is NaN?
+NaN stands for Not-a-Number. It is a special value in JavaScript that represents an invalid mathematical operation or a result that cannot be converted into a valid number.
+ex: 
+console.log("hello" / 2); 
+Number("abc");
+0 / 0; 
+
+but typeof NaN == "number"
+Math.sqrt(-1)
