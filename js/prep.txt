@@ -155,3 +155,72 @@ Number("abc");
 
 but typeof NaN == "number"
 Math.sqrt(-1)
+
+============================
+Why is typeof null equal to "object"?
+typeof null returns "object" because of a historical bug in the original JavaScript implementation.
+Early JavaScript used type tags to identify values, and null was represented internally with a zero value that matched the object type tag.
+This behavior became part of the language, and changing it now would break existing code, so it has been preserved for backward compatibility.
+Although typeof null is "object", null is actually a primitive value. To check for null, use value === null.
+
+===========================================
+
+What are variables?
+A variable is a named container for storing data in memory. 
+It allows a program to save values, retrieve them later, and update them when needed.
+In modern JavaScript, we typically use let for values that may change and const for values that should not be reassigned.
+Variables can store different data types such as numbers, strings, booleans, objects, arrays, and functions.
+
+==================
+
+Difference between var, let, and const.
+Interview-ready answer (with TDZ)
+
+var, let, and const are all used to declare variables in JavaScript.
+
+var is function-scoped, can be redeclared and reassigned, and is hoisted with an initial value of undefined, so it can be accessed before its declaration (though this can cause bugs).
+let is block-scoped, cannot be redeclared in the same scope, but can be reassigned. It is also hoisted, but it remains in the Temporal Dead Zone (TDZ) from the start of the block until its declaration is executed. Accessing it during the TDZ throws a ReferenceError.
+const is also block-scoped and hoisted with TDZ, but it cannot be reassigned after initialization. It must be initialized when declared. For objects and arrays, the reference cannot change, but their contents can still be modified.
+
+In modern JavaScript, use const by default, use let when the value needs to change, and avoid var in new code.
+
+One-line explanation of TDZ (commonly asked)
+
+Temporal Dead Zone (TDZ) is the period between entering a block and the point where a let or const variable is declared. During this period, the variable exists but cannot be accessed, and attempting to do so results in a ReferenceError.
+
+Example:
+
+console.log(a); // undefined
+var a = 10;
+
+console.log(b); // ❌ ReferenceError (TDZ)
+let b = 20;
+
+console.log(c); // ❌ ReferenceError (TDZ)
+const c = 30;
+
+================================================
+Can const objects be modified?
+Yes. A const object can be modified, but it cannot be reassigned.
+The const keyword makes the reference constant, not the object's contents.
+Reassigning the variable to a new object results in a TypeError.
+
+================================================
+What is variable shadowing?
+Variable shadowing is a situation where a variable declared in an inner scope has the same name as a variable in an outer scope.
+The inner variable temporarily hides, or shadows, the outer variable within that scope.
+JavaScript always looks for variables in the current scope first, then moves outward
+Shadowing is valid with let, const, and var when the scopes don't conflict.
+However, illegal shadowing occurs when a var declaration attempts to shadow an outer let or const in the same function/global scope, resulting in a SyntaxError.
+
+illegal shadowing:
+❌ Not Allowed
+let a = 10;
+
+{
+    var a = 20;
+}
+
+let is block-scoped.
+var is function-scoped.
+The var declaration leaks outside the block into the same function/global scope, causing a conflict.

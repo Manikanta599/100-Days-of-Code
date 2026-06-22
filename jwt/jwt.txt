@@ -1,0 +1,55 @@
+JWT (JSON Web Token) is a compact token format used for authentication and authorization.
+After successful login, Instead of storing user sessions on the server, the server generates a token and sends it to the client. The client sends the token back with every request.
+
+It consists of three parts:
+
+Header
+Payload
+Signature
+
+The server verifies the token's signature before allowing access.
+
+Why do we use JWT?
+JWT provides stateless authentication.
+
+Without JWT:
+
+Server stores sessions.
+Every request requires checking session storage.
+
+With JWT:
+
+Server doesn't maintain session state.
+Authentication information is inside the token.
+Easier to scale across multiple servers.
+
+What is inside a JWT?
+Header
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+
+Contains the signing algorithm.
+
+Payload
+{
+  "sub": 101,
+  "email": "john@gmail.com",
+  "role": "admin",
+  "iat": 171000,
+  "exp": 172000
+}
+
+Contains claims.
+
+Signature
+HMACSHA256(
+base64(header)+'.'+base64(payload),
+secret
+)
+
+Used to detect tampering.
+
+
+5. Difference between Authentication and Authorization?
