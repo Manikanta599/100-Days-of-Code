@@ -1,0 +1,16 @@
+Dependency Injection (DI): 
+Dependency Injection (DI) is a design pattern where an object's dependencies are provided from the outside instead of the object creating them itself.
+like in nest js Instead of a class creating the objects it needs, the framework injects them.
+This reduces tight coupling, improves testability, reusability, and maintainability.
+
+Benefits
+
+loose coupling
+reusable
+mockable
+maintainable
+scalable
+
+How NestJS Implements DI
+
+NestJS has an IoC (Inversion of Control) Container.
