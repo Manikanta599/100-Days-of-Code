@@ -1,0 +1,809 @@
+# Client → Server Communication (HTTP) – Complete Interview Notes
+
+# 1. What is Client–Server Communication?
+
+Client–Server communication is the process where a **client** sends an HTTP request to a **server**, and the server processes the request and sends back an HTTP response.
+
+```
+HTTP Request
+Client ---------------------> Server
+
+HTTP Response
+Client <--------------------- Server
+```
+
+**Interview Answer**
+
+> Client-server communication is a request-response model where a client sends an HTTP request to a server, the server processes it (often interacting with databases or other services), and returns an HTTP response.
+
+---
+
+# 2. What is a Client?
+
+A client is any application that requests data or services from a server.
+
+Examples:
+
+* Web Browser (Chrome, Firefox)
+* React Application
+* Mobile App
+* Postman
+* Another Backend Service
+* IoT Device
+
+Example:
+
+```
+React App
+      |
+GET /users
+      |
+      V
+NestJS Server
+```
+
+---
+
+# 3. What is a Server?
+
+A server is a program that listens for incoming requests, processes them, and returns responses.
+
+Example (NestJS):
+
+```typescript
+@Controller('users')
+export class UsersController {
+  @Get()
+  getUsers() {
+    return [{ id: 1, name: 'Jay' }];
+  }
+}
+```
+
+Flow:
+
+```
+Request
+
+↓
+
+Controller
+
+↓
+
+Service
+
+↓
+
+Repository
+
+↓
+
+Database
+
+↓
+
+Response
+```
+
+---
+
+# 4. What is HTTP?
+
+HTTP (HyperText Transfer Protocol) is an application-layer protocol used for communication between clients and servers.
+
+It defines:
+
+* Request format
+* Response format
+* HTTP methods
+* Status codes
+* Headers
+
+Example:
+
+```
+React
+
+↓
+
+HTTP
+
+↓
+
+NestJS
+```
+
+---
+
+# 5. Complete Request Lifecycle
+
+```
+User
+
+↓
+
+Browser
+
+↓
+
+DNS Lookup
+
+↓
+
+IP Address
+
+↓
+
+TCP Connection
+
+↓
+
+TLS Handshake (HTTPS)
+
+↓
+
+HTTP Request
+
+↓
+
+Load Balancer (optional)
+
+↓
+
+Reverse Proxy (optional)
+
+↓
+
+NestJS Server
+
+↓
+
+Middleware
+
+↓
+
+Guards
+
+↓
+
+Interceptors (Before)
+
+↓
+
+Pipes
+
+↓
+
+Controller
+
+↓
+
+Service
+
+↓
+
+Repository
+
+↓
+
+Database
+
+↓
+
+Repository
+
+↓
+
+Service
+
+↓
+
+Controller
+
+↓
+
+Interceptors (After)
+
+↓
+
+HTTP Response
+
+↓
+
+Browser
+```
+
+---
+
+# 6. HTTP Request Structure
+
+```
+POST /login HTTP/1.1
+Host: api.example.com
+Content-Type: application/json
+Authorization: Bearer TOKEN
+
+{
+   "email":"abc@gmail.com",
+   "password":"123456"
+}
+```
+
+An HTTP request consists of:
+
+## Request Line
+
+```
+POST /login HTTP/1.1
+```
+
+Contains:
+
+* HTTP Method
+* URL
+* HTTP Version
+
+---
+
+## Headers
+
+Metadata about the request.
+
+Examples:
+
+```
+Host
+Authorization
+Content-Type
+Accept
+User-Agent
+Cookie
+Content-Length
+```
+
+---
+
+## Body
+
+Contains the actual data.
+
+Example:
+
+```json
+{
+  "email":"abc@gmail.com",
+  "password":"123456"
+}
+```
+
+Used mainly with:
+
+* POST
+* PUT
+* PATCH
+
+---
+
+# 7. HTTP Response Structure
+
+Example:
+
+```
+HTTP/1.1 200 OK
+
+Content-Type: application/json
+
+{
+   "message":"Login Successful",
+   "accessToken":"xxxxx"
+}
+```
+
+Contains:
+
+* Status Line
+* Response Headers
+* Response Body
+
+---
+
+# 8. HTTP Methods
+
+## GET
+
+Retrieve data.
+
+```
+GET /products
+```
+
+Should not modify server data.
+
+---
+
+## POST
+
+Create a new resource.
+
+```
+POST /products
+```
+
+Body:
+
+```json
+{
+  "name":"Laptop"
+}
+```
+
+---
+
+## PUT
+
+Replace an entire resource.
+
+```
+PUT /products/1
+```
+
+---
+
+## PATCH
+
+Update only selected fields.
+
+```
+PATCH /products/1
+
+{
+   "price":45000
+}
+```
+
+---
+
+## DELETE
+
+Delete a resource.
+
+```
+DELETE /products/1
+```
+
+---
+
+# 9. Common HTTP Headers
+
+### Host
+
+Identifies the target server.
+
+```
+Host: api.example.com
+```
+
+---
+
+### Content-Type
+
+Specifies the body format.
+
+```
+Content-Type: application/json
+```
+
+---
+
+### Accept
+
+Specifies what response formats the client accepts.
+
+```
+Accept: application/json
+```
+
+---
+
+### Authorization
+
+Contains authentication credentials.
+
+```
+Authorization: Bearer JWT_TOKEN
+```
+
+---
+
+### Cookie
+
+Sends session information.
+
+---
+
+### User-Agent
+
+Identifies the client application.
+
+---
+
+# 10. HTTP Status Codes
+
+## 2xx – Success
+
+200 OK
+
+```
+Request successful.
+```
+
+201 Created
+
+```
+Resource created.
+```
+
+204 No Content
+
+```
+Success with no response body.
+```
+
+---
+
+## 3xx – Redirection
+
+301 Moved Permanently
+
+302 Found
+
+304 Not Modified
+
+---
+
+## 4xx – Client Errors
+
+400 Bad Request
+
+401 Unauthorized
+
+403 Forbidden
+
+404 Not Found
+
+409 Conflict
+
+422 Unprocessable Entity
+
+429 Too Many Requests
+
+---
+
+## 5xx – Server Errors
+
+500 Internal Server Error
+
+502 Bad Gateway
+
+503 Service Unavailable
+
+504 Gateway Timeout
+
+---
+
+# 11. Stateless Nature of HTTP
+
+HTTP is stateless.
+
+Meaning:
+
+Each request is completely independent.
+
+The server does not automatically remember previous requests.
+
+Example:
+
+```
+POST /login
+
+↓
+
+Token Returned
+```
+
+Later:
+
+```
+GET /orders
+```
+
+The server doesn't know who you are unless you send:
+
+```
+Authorization: Bearer JWT
+```
+
+or
+
+```
+Cookie
+```
+
+---
+
+# 12. Cookies vs Sessions vs JWT
+
+Cookies
+
+* Stored in browser
+* Small pieces of data
+
+Sessions
+
+* Stored on server
+* Client stores only Session ID
+
+JWT
+
+* Self-contained token
+* Server usually doesn't store session data
+* Common in REST APIs and microservices
+
+---
+
+# 13. HTTP vs HTTPS
+
+HTTP
+
+```
+Plain Text
+```
+
+HTTPS
+
+```
+Encrypted using TLS
+```
+
+Benefits:
+
+* Encryption
+* Authentication
+* Data Integrity
+
+---
+
+# 14. Keep-Alive (Persistent Connections)
+
+Without Keep-Alive
+
+```
+Open TCP
+
+↓
+
+Request
+
+↓
+
+Close
+```
+
+Every request creates a new TCP connection.
+
+With Keep-Alive
+
+```
+Open TCP
+
+↓
+
+Multiple Requests
+
+↓
+
+Multiple Responses
+
+↓
+
+Close
+```
+
+Reduces latency and improves performance.
+
+---
+
+# 15. REST APIs and HTTP
+
+REST APIs use HTTP methods to perform CRUD operations.
+
+```
+GET      /users
+POST     /users
+PUT      /users/1
+PATCH    /users/1
+DELETE   /users/1
+```
+
+---
+
+# 16. NestJS Request Lifecycle
+
+```
+Incoming Request
+
+↓
+
+Middleware
+
+↓
+
+Guards
+
+↓
+
+Interceptors (Before)
+
+↓
+
+Pipes
+
+↓
+
+Controller
+
+↓
+
+Service
+
+↓
+
+Repository
+
+↓
+
+Database
+
+↓
+
+Response
+
+↓
+
+Interceptors (After)
+
+↓
+
+Exception Filters (if required)
+
+↓
+
+Client
+```
+
+---
+
+# 17. Common Backend Components
+
+A request may pass through:
+
+```
+Browser
+
+↓
+
+DNS
+
+↓
+
+Load Balancer
+
+↓
+
+Reverse Proxy (Nginx)
+
+↓
+
+API Gateway
+
+↓
+
+NestJS
+
+↓
+
+Redis
+
+↓
+
+Database
+
+↓
+
+Kafka
+
+↓
+
+External APIs
+```
+
+---
+
+# 18. Frequently Asked Interview Questions
+
+### What is HTTP?
+
+HTTP is an application-layer protocol used for communication between clients and servers using a request-response model.
+
+---
+
+### Why is HTTP stateless?
+
+Each request is independent. The server does not remember previous requests, making applications easier to scale.
+
+---
+
+### Difference between GET and POST?
+
+GET retrieves data and should not change server state.
+
+POST sends data to create or process resources.
+
+---
+
+### Difference between PUT and PATCH?
+
+PUT replaces the complete resource.
+
+PATCH updates only specific fields.
+
+---
+
+### Why do we use HTTPS?
+
+HTTPS encrypts communication using TLS, protecting passwords, tokens, and other sensitive data.
+
+---
+
+### What is an HTTP Header?
+
+Headers provide metadata about requests and responses, such as authentication, content type, accepted formats, and caching information.
+
+---
+
+### What is the difference between 401 and 403?
+
+401 Unauthorized:
+Authentication is missing or invalid.
+
+403 Forbidden:
+Authentication succeeded, but the user does not have permission to access the resource.
+
+---
+
+### Explain the complete request flow.
+
+User → Browser → DNS → TCP Connection → TLS (HTTPS) → HTTP Request → Load Balancer → Reverse Proxy → NestJS Middleware → Guards → Pipes → Controller → Service → Repository → Database → Response → Browser.
+
+---
+
+# 19. Topics to Learn Next
+
+1. DNS (Domain Name System)
+2. TCP/IP and the Three-Way Handshake
+3. HTTPS and the TLS Handshake
+4. REST API Design
+5. Cookies, Sessions, and JWT
+6. CORS
+7. Reverse Proxy (Nginx)
+8. Load Balancer
+9. API Gateway
+10. WebSockets
+11. HTTP/2 and HTTP/3
+12. Caching (Browser, CDN, Redis)
+13. Rate Limiting
+14. Authentication & Authorization
+15. Microservices Communication
+
+Mastering these topics will give you a strong foundation for backend development and system design interviews.

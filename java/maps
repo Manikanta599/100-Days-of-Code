@@ -1,0 +1,33 @@
+                Map (Interface)
+                     |
+     ----------------------------------
+     |              |                 |
+ HashMap      LinkedHashMap       TreeMap
+                                     |
+                              NavigableMap
+
+
+
+
+import java.util.HashMap;
+import java.util.Map;
+
+Map<Integer, String> map = new HashMap<>();
+
+Most Important Methods to Memorize
+Method	Purpose
+put(key, value)	Insert or update
+get(key)	Get value
+getOrDefault(key, defaultValue)	Get value or default
+putIfAbsent(key, value)	Insert only if key is absent
+containsKey(key)	Check key
+containsValue(value)	Check value
+remove(key)	Remove entry
+replace(key, value)	Update value
+keySet()	Get all keys
+values()	Get all values
+entrySet()	Get key-value pairs
+forEach((k, v) -> {})	Iterate with lambda
+size()	Number of entries
+clear()	Remove all entries
+isEmpty()	Check if empty

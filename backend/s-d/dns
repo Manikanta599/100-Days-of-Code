@@ -1,0 +1,722 @@
+# DNS (Domain Name System) – Complete Interview Notes
+
+# 1. What is DNS?
+
+DNS (Domain Name System) is the Internet's "phone book."
+
+Humans remember domain names like:
+
+```
+google.com
+amazon.com
+github.com
+```
+
+Computers communicate using IP addresses like:
+
+```
+142.250.183.14
+140.82.114.4
+```
+
+DNS translates a **domain name** into an **IP address** so the browser knows which server to connect to.
+
+---
+
+# 2. Interview Definition
+
+> DNS (Domain Name System) is a distributed and hierarchical naming system that converts human-readable domain names into IP addresses, allowing clients to locate and communicate with servers over the Internet.
+
+---
+
+# 3. Why Do We Need DNS?
+
+Without DNS, users would have to remember IP addresses instead of domain names.
+
+Example:
+
+Instead of typing:
+
+```
+https://google.com
+```
+
+you would have to type:
+
+```
+https://142.250.183.14
+```
+
+DNS makes the Internet easy to use.
+
+---
+
+# 4. Real-Life Analogy
+
+Think of your phone contacts.
+
+You save:
+
+```
+Mom
+Dad
+John
+```
+
+instead of remembering every phone number.
+
+When you tap "Mom," your phone looks up the stored number and makes the call.
+
+DNS works the same way:
+
+```
+google.com
+```
+
+↓
+
+```
+142.250.183.14
+```
+
+---
+
+# 5. Where Does DNS Fit?
+
+```
+Browser
+
+↓
+
+DNS Lookup
+
+↓
+
+IP Address
+
+↓
+
+TCP Connection
+
+↓
+
+HTTPS (TLS)
+
+↓
+
+HTTP Request
+
+↓
+
+Server
+```
+
+DNS is the first networking step before any HTTP request is sent.
+
+---
+
+# 6. Complete DNS Resolution Process
+
+Suppose the user enters:
+
+```
+https://www.example.com
+```
+
+The browser performs the following steps:
+
+```
+User
+
+↓
+
+Browser
+
+↓
+
+Browser Cache
+
+↓
+
+Operating System Cache
+
+↓
+
+Router Cache (optional)
+
+↓
+
+ISP DNS Resolver
+
+↓
+
+Root DNS Server
+
+↓
+
+TLD DNS Server
+
+↓
+
+Authoritative DNS Server
+
+↓
+
+IP Address Returned
+
+↓
+
+Browser Connects to Server
+```
+
+---
+
+# 7. Browser Cache
+
+The browser first checks whether it already knows the IP address.
+
+If found:
+
+```
+Browser Cache
+
+↓
+
+IP Address Found
+
+↓
+
+Skip DNS Lookup
+```
+
+This makes websites load faster.
+
+---
+
+# 8. Operating System Cache
+
+If the browser cache misses, the operating system checks its DNS cache.
+
+Example:
+
+Windows
+
+```
+ipconfig /displaydns
+```
+
+Linux/macOS
+
+```
+systemd-resolve --statistics
+```
+
+or
+
+```
+dig
+```
+
+---
+
+# 9. Recursive Resolver (ISP DNS Server)
+
+If the OS doesn't know the IP, it asks a recursive DNS resolver.
+
+Examples:
+
+* ISP DNS
+* Google DNS (8.8.8.8)
+* Cloudflare DNS (1.1.1.1)
+
+The resolver performs the lookup on behalf of the client.
+
+---
+
+# 10. Root DNS Servers
+
+The resolver first contacts a Root DNS Server.
+
+The root server does **not** know the IP address.
+
+Instead, it replies:
+
+> "Ask the .com DNS servers."
+
+```
+google.com
+
+↓
+
+Root Server
+
+↓
+
+Go to .com servers
+```
+
+---
+
+# 11. Top-Level Domain (TLD) Server
+
+The resolver then contacts the TLD server.
+
+Examples:
+
+```
+.com
+.org
+.net
+.edu
+.in
+.io
+```
+
+The TLD server replies:
+
+> "Ask Google's authoritative DNS server."
+
+---
+
+# 12. Authoritative DNS Server
+
+This server stores the actual DNS records.
+
+Example:
+
+```
+google.com
+
+↓
+
+142.250.183.14
+```
+
+It sends the IP address back to the resolver.
+
+---
+
+# 13. DNS Records
+
+DNS servers store different types of records.
+
+## A Record
+
+Maps a domain to an IPv4 address.
+
+```
+google.com
+
+↓
+
+142.250.183.14
+```
+
+---
+
+## AAAA Record
+
+Maps a domain to an IPv6 address.
+
+---
+
+## CNAME Record
+
+Creates an alias.
+
+Example:
+
+```
+www.example.com
+
+↓
+
+example.com
+```
+
+---
+
+## MX Record
+
+Specifies mail servers.
+
+Used for email delivery.
+
+Example:
+
+```
+gmail.com
+
+↓
+
+Google Mail Servers
+```
+
+---
+
+## NS Record
+
+Specifies which DNS servers are authoritative for the domain.
+
+---
+
+## TXT Record
+
+Stores text information.
+
+Commonly used for:
+
+* Domain verification
+* SPF
+* DKIM
+* DMARC
+
+---
+
+# 14. What is TTL?
+
+TTL stands for **Time To Live**.
+
+It tells DNS resolvers how long they may cache a DNS record.
+
+Example:
+
+```
+TTL = 3600 seconds
+```
+
+The IP address can be reused for one hour before another lookup is required.
+
+Higher TTL:
+
+* Faster lookups
+* Fewer DNS queries
+
+Lower TTL:
+
+* Easier to change IP addresses
+* More DNS traffic
+
+---
+
+# 15. Recursive vs Iterative Queries
+
+## Recursive Query
+
+The client asks one resolver.
+
+The resolver does all the work.
+
+```
+Browser
+
+↓
+
+DNS Resolver
+
+↓
+
+Root
+
+↓
+
+TLD
+
+↓
+
+Authoritative
+
+↓
+
+Browser
+```
+
+Most browsers use recursive queries.
+
+---
+
+## Iterative Query
+
+Each DNS server tells the client where to ask next.
+
+The client performs multiple lookups.
+
+Less common for browsers.
+
+---
+
+# 16. Public DNS Providers
+
+Google DNS
+
+```
+8.8.8.8
+8.8.4.4
+```
+
+Cloudflare DNS
+
+```
+1.1.1.1
+1.0.0.1
+```
+
+OpenDNS
+
+```
+208.67.222.222
+```
+
+---
+
+# 17. What Happens After DNS?
+
+Once the browser receives the IP address:
+
+```
+DNS
+
+↓
+
+TCP Three-Way Handshake
+
+↓
+
+TLS Handshake (HTTPS)
+
+↓
+
+HTTP Request
+
+↓
+
+Server Response
+```
+
+DNS is complete after the IP address is found.
+
+---
+
+# 18. DNS Caching
+
+Caching exists at multiple levels.
+
+```
+Browser Cache
+
+↓
+
+Operating System Cache
+
+↓
+
+Router Cache
+
+↓
+
+ISP Resolver Cache
+```
+
+Benefits:
+
+* Faster browsing
+* Lower latency
+* Reduced DNS server load
+
+---
+
+# 19. Common DNS Problems
+
+## DNS Cache Poisoning
+
+Attackers insert fake DNS records into a cache.
+
+Result:
+
+```
+google.com
+
+↓
+
+Malicious Server
+```
+
+Protection:
+
+* DNSSEC
+* Trusted DNS providers
+
+---
+
+## DNS Spoofing
+
+A fake DNS response redirects users to malicious websites.
+
+---
+
+## DNS Amplification Attack
+
+A type of DDoS attack where attackers use open DNS resolvers to flood a victim with large amounts of traffic.
+
+---
+
+# 20. DNS vs IP Address
+
+DNS
+
+* Human-readable
+* Example: google.com
+
+IP Address
+
+* Machine-readable
+* Example: 142.250.183.14
+
+---
+
+# 21. Common Commands
+
+Lookup a domain:
+
+```
+nslookup google.com
+```
+
+Advanced lookup:
+
+```
+dig google.com
+```
+
+Trace DNS resolution:
+
+```
+dig +trace google.com
+```
+
+---
+
+# 22. Frequently Asked Interview Questions
+
+### What is DNS?
+
+DNS is a distributed and hierarchical naming system that converts domain names into IP addresses.
+
+---
+
+### Why do we need DNS?
+
+Because humans remember names more easily than IP addresses.
+
+---
+
+### What is an A Record?
+
+Maps a domain name to an IPv4 address.
+
+---
+
+### What is a CNAME?
+
+Creates an alias from one domain name to another.
+
+---
+
+### What is TTL?
+
+TTL defines how long a DNS record can be cached before it expires.
+
+---
+
+### What is the difference between Recursive and Iterative DNS?
+
+Recursive DNS:
+The resolver performs all lookups and returns the final IP.
+
+Iterative DNS:
+Each DNS server directs the requester to the next server.
+
+---
+
+### What happens after DNS lookup?
+
+The client establishes a TCP connection (and a TLS handshake for HTTPS) before sending the HTTP request.
+
+---
+
+### Is DNS secure?
+
+Basic DNS is not encrypted or authenticated. Modern technologies like DNSSEC help verify the authenticity of DNS data, while DNS over HTTPS (DoH) and DNS over TLS (DoT) encrypt DNS queries between the client and the DNS resolver.
+
+---
+
+# 23. Interview Summary
+
+**Flow to remember:**
+
+```
+User enters URL
+
+↓
+
+Browser Cache
+
+↓
+
+OS Cache
+
+↓
+
+DNS Resolver
+
+↓
+
+Root DNS Server
+
+↓
+
+TLD DNS Server
+
+↓
+
+Authoritative DNS Server
+
+↓
+
+IP Address Returned
+
+↓
+
+TCP Connection
+
+↓
+
+TLS Handshake
+
+↓
+
+HTTP Request
+
+↓
+
+Server Response
+```
+
+---
+
+# 24. What to Learn Next
+
+Now that you understand DNS, continue in this order:
+
+1. TCP/IP Fundamentals
+2. TCP Three-Way Handshake
+3. HTTPS & TLS Handshake
+4. HTTP/1.1 vs HTTP/2 vs HTTP/3
+5. REST APIs
+6. Cookies, Sessions, and JWT
+7. CORS
+8. Reverse Proxy (Nginx)
+9. Load Balancers
+10. API Gateway
+
+This sequence follows the exact path a request takes from the browser to your backend server and provides a solid foundation for backend and system design interviews.
