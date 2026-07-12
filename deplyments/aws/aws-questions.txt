@@ -1,0 +1,50 @@
+LOW (Beginner) – 30 Questions
+AWS (10)
+What is cloud computing?
+What is AWS?
+Why do companies use AWS?
+What are AWS Regions?
+What are Availability Zones?
+What is an EC2 instance?
+What is Amazon S3?
+What is Amazon RDS?
+What is IAM?
+What is a Security Group?
+
+Explain the lifecycle of an EC2 instance.
+How do you deploy a NestJS application on EC2?
+Difference between Public and Private IP?
+What is an AMI?
+What is an Elastic IP?
+Difference between Security Group and Network ACL?
+Explain S3 Versioning.
+What is a Presigned URL?
+Difference between Multi-AZ and Read Replica?
+How does RDS handle backups?
+
+
+Design AWS architecture for a scalable NestJS application.
+Explain VPC architecture.
+How would you secure an EC2 instance?
+How do Load Balancers distribute traffic?
+Difference between Application Load Balancer and Network Load Balancer?
+How would you scale thousands of users?
+Explain Auto Scaling Groups.
+Design a high-availability RDS architecture.
+How would you migrate a database with zero downtime?
+Explain AWS disaster recovery strategies.
+
+
+
+
+
+Your EC2 instance suddenly becomes unreachable. How do you troubleshoot it?
+Your NestJS application works locally but not inside Docker. What do you check?
+Your Docker container exits immediately after starting. Why?
+Your CI/CD pipeline fails during npm install. How do you debug it?
+Your deployment succeeds, but users still see the old version. Why?
+RDS CPU utilization is consistently above 90%. What actions would you take?
+S3 file uploads fail with an "Access Denied" error. How would you investigate?
+A deployment introduces a critical bug. How do you perform a rollback?
+Your Docker image size is over 2 GB. How would you reduce it?
+Design a deployment architecture for a NestJS + React + MySQL + Redis application that can handle 10,000 concurrent users.

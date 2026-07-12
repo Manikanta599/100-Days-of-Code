@@ -1,0 +1,35 @@
+Docker (10)
+What is Docker?
+Why do we use Docker?
+What is containerization?
+Difference between Docker and Virtual Machine?
+What is a Docker Image?
+What is a Docker Container?
+What is Docker Hub?
+What is a Dockerfile?
+What is Docker Compose?
+Why use Docker Compose?
+
+Explain each instruction in a Dockerfile.
+Difference between CMD and ENTRYPOINT?
+Difference between COPY and ADD?
+What is a Docker Volume?
+Difference between Bind Mount and Volume?
+What is Docker Networking?
+What is Port Mapping?
+How do containers communicate?
+What is a multi-stage Docker build?
+How do you optimize Docker image size?
+
+
+
+How does Docker internally work?
+Explain Docker namespaces and cgroups.
+How does Docker networking work internally?
+Difference between Bridge, Host, Overlay, and Macvlan networks?
+Explain Docker layer caching.
+Why does Docker build sometimes invalidate cache?
+How would you debug a crashing container?
+Explain rootless Docker.
+How do you secure Docker containers?
+How do you monitor Docker containers in production?

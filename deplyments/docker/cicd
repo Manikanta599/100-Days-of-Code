@@ -1,0 +1,34 @@
+What is CI?
+What is CD?
+Difference between Continuous Delivery and Continuous Deployment?
+What is a pipeline?
+Why automate deployments?
+What is GitHub Actions?
+What is Jenkins?
+What happens after git push?
+What is a build?
+What is deployment?
+
+
+Explain a complete CI/CD pipeline.
+How do GitHub Actions work?
+What are GitHub Secrets?
+Why shouldn't .env files be committed?
+What happens when pipeline tests fail?
+Explain Blue-Green Deployment.
+Explain Rolling Deployment.
+What is Zero Downtime Deployment?
+How do you rollback a deployment?
+How do you deploy Docker images automatically?
+
+
+Design a production-grade CI/CD pipeline.
+How do you deploy microservices independently?
+How would you implement Canary Deployment?
+How do feature flags help deployments?
+How do you handle database migrations in CI/CD?
+How do you ensure zero downtime during deployments?
+How do you secure secrets in production pipelines?
+How do you optimize slow CI pipelines?
+How would you deploy to multiple environments (Dev, QA, Staging, Production)?
+Design a complete DevOps workflow for a microservices application.

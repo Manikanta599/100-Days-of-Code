@@ -1,0 +1,768 @@
+"One of the interesting features I built is an AI Inventory Investigation Agent for our inventory management system.
+
+The main problem we wanted to solve was that whenever a warehouse manager asked questions like:
+
+Why is this GR not issued?
+Why is this item out of stock?
+Why is allocation still pending?
+
+they had to manually open multiple modules like Inventory, Material Movement, Allocation, Receiving, and Picking. It usually took around 30 to 60 minutes to find the actual reason.
+
+So we built an AI agent that can answer these questions automatically in a few seconds.
+
+How it works
+
+The user simply types a question in normal English.
+
+For example,
+
+"Why is GR 1234 still not issued?"
+
+This request first comes to our Inventory Management microservice, where the AI Agent is implemented.
+
+Inside the service, we create an investigation context with a unique investigation ID and send the user's question to Google Gemini.
+
+Along with the question, we also provide Gemini with a list of available tools. These tools are actually backend APIs that can fetch real business data.
+
+For example, we have tools like:
+
+Get Current Stock
+Get Inventory Movements
+Get Allocation Details
+Get Picking Status
+Get Receiving History
+Get Material Movement History
+
+Gemini reads the user's question and decides which tool should be called first.
+
+For example, if the question is about a GR, Gemini may first call the Material Movement History tool.
+
+Our backend receives this tool request and calls the corresponding REST API in either the Inventory microservice or the Material Movement microservice.
+
+The API returns real data from the database.
+
+We then send that response back to Gemini.
+
+Gemini now has more information and decides whether it needs another tool.
+
+For example, after checking material movement, it may decide to check Allocation Details, and then Picking Status.
+
+This process continues until Gemini has enough information to answer the user's question.
+
+We call this an agentic loop because the AI is deciding which tools to call step by step.
+
+To avoid infinite loops, we limited it to a maximum of six tool rounds.
+
+Final Response
+
+Once Gemini has collected all the required information, it returns a structured response containing:
+
+the final answer,
+findings,
+recommendations,
+and a confidence level.
+
+For example, it may say:
+
+"GR 1234 is waiting because Allocation ALO-9999 has been created but no picker has been assigned."
+
+So instead of checking multiple systems manually, the warehouse manager immediately gets the root cause.
+
+Reliability
+
+One important thing is that the AI never generates inventory information on its own.
+
+It only uses data returned from our backend APIs.
+
+So every answer is based on real database records, which prevents hallucinations.
+
+Additional Features
+
+We also store every tool call in Redis for 24 hours.
+
+This includes:
+
+which tools Gemini called,
+the arguments,
+response time,
+and whether the call succeeded or failed.
+
+This helps us debug investigations and monitor AI behavior.
+
+Technologies Used
+
+The project was built using:
+
+NestJS
+TypeScript
+Google Gemini Function Calling
+REST APIs
+Redis
+Axios with retry mechanism
+Microservices Architecture
+
+Overall, this feature reduced investigation time from around 30–60 minutes to just a few seconds, while allowing warehouse users to ask questions in natural language instead of navigating multiple screens."
+
+If the interviewer asks "What was your contribution?"
+
+You can answer:
+
+"I designed and developed the AI Inventory Investigation Agent inside our NestJS microservices. I implemented the agent orchestration, Gemini function-calling workflow, tool definitions, multi-turn agent loop, HTTP client for executing tools across microservices, Redis-based tool tracing, and integrated existing inventory and material movement services so the AI could perform automatic root cause analysis using real business data instead of generating answers."
+
+This explanation closely matches the architecture and implementation described in your documentation. 
+
+
+
+
+
+
+
+=====================================================================================================================================
+
+
+
+Interviewer: "How many requests can your AI agent handle per minute?"
+Answer
+
+"Currently, the number of requests depends on the AI provider's Rate Limits (RPM and TPM) and our server capacity. Gemini itself has limits on Requests Per Minute (RPM) and Tokens Per Minute (TPM), so if many users send requests simultaneously, we cannot simply forward every request directly to Gemini."
+
+"In production, we should protect the AI service before the request reaches Gemini."
+
+Interviewer: "How would you implement rate limiting?"
+Answer
+
+"I would implement rate limiting at multiple layers."
+
+1. API Gateway / NestJS Rate Limiting (First Protection)
+
+When the request comes
+
+User
+   ↓
+API Gateway
+   ↓
+Rate Limiter
+   ↓
+Inventory Agent
+
+For example
+
+Maximum 5 AI requests per minute per user
+Maximum 20 requests per minute per company
+Maximum 100 requests per minute globally
+
+If the limit is exceeded
+
+HTTP 429
+Too Many Requests
+
+The request never reaches Gemini.
+
+This saves money because no AI API call is made.
+
+2. Redis Rate Limiter
+
+Instead of storing counters in memory
+
+user123
+↓
+
+Redis
+
+user123:minute=4
+
+Each request increments the counter.
+
+If
+
+count >= limit
+
+Return
+
+429 Too Many Requests
+
+Redis is perfect because multiple NestJS instances share the same counters.
+
+3. Queue Requests
+
+Suppose Gemini allows
+
+60 requests/minute
+
+but suddenly
+
+500 users
+
+send requests.
+
+Instead of failing
+
+User
+ ↓
+Bull Queue
+ ↓
+Workers
+ ↓
+Gemini
+
+Workers process only the allowed number of requests.
+
+4. Circuit Breaker
+
+Suppose Gemini starts returning
+
+429
+Quota Exceeded
+
+or
+
+503
+Service Unavailable
+
+Instead of continuing to call Gemini
+
+Circuit Opens
+
+Return
+
+AI service is currently busy.
+Please try again later.
+
+This prevents wasting retries.
+
+The Most Important Part (Token Saving)
+
+This is probably what the interviewer wants.
+
+You can say:
+
+"Yes. We stop the request before sending it to Gemini. Once the request reaches Gemini, even if Gemini rejects it or the request eventually fails, it may still count toward API rate limits or consume quota depending on the provider. Therefore, we perform authentication, validation, and rate limiting before making any AI API call. This prevents unnecessary API calls, saves cost, and avoids consuming available RPM."
+
+That is exactly the production mindset.
+
+The Flow
+Client
+   │
+Authenticate User
+   │
+Validate Request
+   │
+Redis Rate Limiter
+   │
+Quota Check
+   │
+Queue (optional)
+   │
+Gemini
+   │
+Tool Calls
+   │
+Response
+
+Notice Gemini is almost the last step.
+
+If they ask "What if Gemini has only 60 RPM?"
+
+You can answer:
+
+"If Gemini allows only 60 requests per minute and we receive 500 requests, I would not send all 500 immediately. First, I would apply rate limiting per user to block excessive usage. Then I would enqueue the remaining valid requests using Bull Queue and process them at a controlled rate. If the queue becomes too large or the provider continues returning 429 errors, I would temporarily reject new requests with a 429 or 503 response instead of continuously calling Gemini."
+
+One more thing you can mention (this impresses interviewers)
+
+"Another optimization is request validation before the AI call. If mandatory fields like warehouseCode or referenceNo are missing, or the question is empty, we immediately return a validation error instead of invoking Gemini. We can also cache answers for frequently asked questions using Redis. If the same investigation was already performed recently, we return the cached result without calling the LLM again. This further reduces cost, latency, and token usage."
+
+This demonstrates that you're thinking about production systems, where protecting the LLM and controlling costs are just as important as building the AI workflow itself.
+
+===================================================================================================================================================
+
+
+
+
+If I were interviewing you for a Software Engineer (Backend/AI/Microservices) role, I wouldn't ask "What is Gemini?" Instead, I'd ask questions that test whether you really designed the system.
+
+Here are the kinds of questions I'd ask, along with what I'm looking for.
+
+1. Why did you build this?
+Q1. What problem were you trying to solve?
+
+Expected answer:
+
+Manual investigation took 30-60 minutes.
+Users had to check multiple microservices.
+AI automates root cause analysis.
+Q2. Why use AI instead of writing normal business logic?
+
+Expected answer:
+
+Because we don't know what sequence of APIs is required for every question. Different questions require different combinations of services. AI dynamically decides which APIs to call based on the user's query.
+
+Q3. Why not use one SQL query?
+
+Expected answer:
+
+Data exists across multiple microservices and databases. One SQL query cannot access all services without tightly coupling them.
+
+2. Architecture
+Q4. Explain your architecture from start to finish.
+
+They expect:
+
+Frontend
+
+↓
+
+Inventory Service
+
+↓
+
+Gemini
+
+↓
+
+Tool Calls
+
+↓
+
+Inventory APIs
+MOVS APIs
+
+↓
+
+Gemini
+
+↓
+
+Final Answer
+Q5. Why is Gemini outside your microservices?
+
+Expected answer:
+
+Because AI is an external service.
+
+My microservice orchestrates the investigation while Gemini only decides which tool to call.
+
+Business logic remains inside our services.
+
+Q6. Why use HTTP tool calls instead of directly injecting services?
+
+Expected answer:
+
+Because Inventory and MOVS are separate microservices.
+
+HTTP maintains service boundaries.
+
+It also allows adding more services later without changing AI logic.
+
+Q7. Suppose another service is added tomorrow.
+
+Example
+
+Quality Inspection Service
+
+How will your agent support it?
+
+Expected answer:
+
+Simply expose new APIs.
+
+Register new tool definitions.
+
+Gemini automatically starts using them.
+
+No change in orchestration logic.
+
+3. Agentic Loop
+Q8. Why multi-turn?
+
+Why not call all APIs once?
+
+Expected answer:
+
+Because AI doesn't initially know what information is required.
+
+It discovers information step-by-step.
+
+Q9. How does Gemini know which tool to call?
+
+Expected answer:
+
+We provide tool definitions with:
+
+name
+description
+parameters
+
+Gemini compares the user's question with tool descriptions.
+
+Q10. Can Gemini call tools in the wrong order?
+
+Expected answer:
+
+Yes.
+
+That's why tool descriptions are very important.
+
+Clear descriptions improve tool selection.
+
+Q11. Can Gemini call unnecessary tools?
+
+Answer:
+
+Yes.
+
+That's one drawback.
+
+We reduce it by:
+
+limiting max tool rounds
+improving prompts
+writing better tool descriptions
+Q12. Why maximum six rounds?
+
+Expected answer:
+
+To avoid infinite loops and excessive token usage.
+
+4. Scalability
+Q13. What happens if 1000 users ask questions simultaneously?
+
+Expected answer:
+
+Need
+
+Rate limiting
+Queue
+Autoscaling
+Multiple workers
+Redis
+Q14. How many requests can your system process?
+
+Expected answer:
+
+Depends on
+
+Gemini RPM
+TPM
+Server resources
+Worker count
+
+Not a fixed number.
+
+Q15. What if Gemini returns 429?
+
+Expected answer:
+
+Don't retry forever.
+
+Return
+
+AI busy
+Try again later
+
+or queue the request.
+
+Q16. Why rate limit before Gemini?
+
+Expected answer:
+
+To avoid
+
+wasting tokens
+consuming RPM
+unnecessary costs
+5. Reliability
+Q17. What if MOVS service is down?
+
+Expected answer:
+
+That tool fails.
+
+Agent continues with remaining tools.
+
+Response includes
+
+Material Movement service unavailable.
+
+instead of crashing.
+
+Q18. What if Redis is down?
+
+Expected answer:
+
+Investigation still works.
+
+Only tool trace isn't saved.
+
+Graceful degradation.
+
+Q19. What if Gemini times out?
+
+Expected answer:
+
+Configure timeout.
+
+Retry carefully.
+
+If still failing
+
+Return friendly error.
+
+Q20. What if tool API takes 20 seconds?
+
+Expected answer:
+
+Timeout.
+
+Retry.
+
+Circuit breaker.
+
+6. Security
+Q21. Can anyone call your tool APIs?
+
+Expected answer:
+
+No.
+
+Internal APIs.
+
+Authentication.
+
+Service-to-service communication.
+
+Q22. Can prompt injection call random APIs?
+
+Expected answer:
+
+No.
+
+Gemini only has access to registered tools.
+
+It cannot call arbitrary endpoints.
+
+Q23. Can Gemini delete inventory?
+
+Expected answer:
+
+No.
+
+Only read-only tools are exposed.
+
+7. Cost Optimization
+Q24. How do you reduce token cost?
+
+Expected answer:
+
+Limit context
+Max rounds
+Cache results
+Rate limiting
+Better prompts
+Q25. Why not send full database data?
+
+Expected answer:
+
+Too many tokens.
+
+Tools return only relevant data.
+
+Q26. Why not call every tool once?
+
+Expected answer:
+
+Waste
+
+network
+tokens
+latency
+8. Performance
+Q27. Which is slower?
+
+One API with huge data
+
+OR
+
+Three small APIs
+
+Expected answer:
+
+Usually three optimized APIs.
+
+Smaller payload.
+
+Lower token count.
+
+Q28. How would you reduce latency?
+
+Expected answer:
+
+Parallel tool calls (when independent)
+Cache
+Better SQL
+Reduce payload
+Q29. Can Gemini call tools in parallel?
+
+Expected answer:
+
+Yes.
+
+If tools are independent.
+
+Example:
+
+Current Stock
+
+Allocation
+
+Receiving
+
+can run together.
+
+9. Production Questions
+Q30. How do you monitor this system?
+
+Expected answer:
+
+Redis tool trace
+
+Logs
+
+Metrics
+
+API latency
+
+Tool success rate
+
+Q31. What metrics would you collect?
+
+Expected answer:
+
+Average response time
+Tool latency
+Failed investigations
+Tokens used
+Cost
+Tool frequency
+Success rate
+Q32. Which tool is called most?
+
+How would you know?
+
+Expected answer:
+
+Tool traces.
+
+10. Design Questions
+Q33. Why not use LangChain?
+
+Expected answer:
+
+We wanted lightweight integration.
+
+Gemini SDK already supports function calling.
+
+Less dependency.
+
+More control.
+
+Q34. Why Gemini over OpenAI?
+
+Expected answer:
+
+Cost, performance, or availability for your use case.
+
+Also, provider abstraction allows switching without changing business logic.
+
+Q35. Why provider abstraction?
+
+Expected answer:
+
+Avoid vendor lock-in.
+
+Easy migration.
+
+Support multiple models.
+
+Q36. Why Redis instead of MySQL?
+
+Expected answer:
+
+Trace is temporary.
+
+Redis is faster.
+
+TTL support.
+
+No schema needed.
+
+Q37. Why UUID investigation IDs?
+
+Expected answer:
+
+Globally unique.
+
+Easy tracing across services.
+
+11. Hard Questions (Senior Level)
+Q38. How would you make this agent support 100,000 investigations/day?
+
+Expected answer:
+
+Kubernetes autoscaling
+Queue-based processing
+Multiple workers
+Redis
+Load balancer
+Horizontal scaling
+Distributed rate limiting
+Observability
+Q39. How would you reduce AI cost by 70%?
+
+Expected answer:
+
+Redis cache
+Similar question detection
+Smaller models for simple requests
+Better prompts
+Reduce tool rounds
+Return cached investigations
+Parallel tools where possible
+Q40. If you were redesigning this from scratch, what would you improve?
+
+Strong answers include:
+
+Parallel tool execution
+Streaming responses
+Tool result caching
+Semantic cache for repeated questions
+Vector search for documentation
+Better observability dashboards
+Per-user/company quotas
+Queue-based backpressure
+Confidence thresholds with human review for low-confidence results
+The One Question That Separates Good from Great
+
+"Why did you choose an AI agent instead of a traditional workflow engine?"
+
+A strong answer is:
+
+"A workflow engine requires predefined flows. For example, 'Question A' always follows API1 → API2 → API3. But inventory investigations are unpredictable. One question may only need stock data, while another may require stock, allocation, material movement, receiving, and picking information. The AI agent reasons about the user's question and dynamically chooses the tools it needs, making it much more flexible than maintaining dozens of hardcoded workflows."
+
+
+
+
+
+
+
+
+
+
+
+
+A good AI service should also:
+
+✅ Rate-limit users (Redis + sliding window/token bucket).
+✅ Cache identical investigations (e.g., same item + warehouse for a short TTL).
+✅ Validate input before calling Gemini.
+✅ Retry only transient errors (like temporary RPM limits), not exhausted daily quotas.
+✅ Return a friendly 429 Too Many Requests or 503 Service Unavailable instead of a generic 500 Internal Server Error.
