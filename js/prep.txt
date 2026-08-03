@@ -224,3 +224,450 @@ let a = 10;
 let is block-scoped.
 var is function-scoped.
 The var declaration leaks outside the block into the same function/global scope, causing a conflict.
+
+==================================================================================================
+
+What is hoisting: 
+
+Hoisting is JavaScript's behavior of moving declarations to the top of their scope during the memory creation phase before execution begins. Only declarations are hoisted, not initializations. var is initialized with undefined, so it can be accessed before its declaration. let and const are also hoisted, but they remain in the Temporal Dead Zone until their declaration executes, so accessing them early throws a ReferenceError. Function declarations are fully hoisted, but function expressions and arrow functions are not.
+
+
+Hoisting (Simple Notes)
+What is Hoisting?
+
+Definition:
+Hoisting is JavaScript's behavior of moving declarations to the top of their scope before executing the code.
+
+Remember: Only the declaration is hoisted, not the value (initialization).
+
+Example (var)
+console.log(a); // undefined
+
+var a = 10;
+
+Internally JavaScript sees:
+
+var a;
+
+console.log(a); // undefined
+
+a = 10;
+
+Why undefined?
+
+Declaration is hoisted.
+Value is assigned later.
+let and const
+console.log(a);
+
+let a = 10;
+
+Output:
+
+ReferenceError
+Why?
+
+let and const are also hoisted, but they stay in the Temporal Dead Zone (TDZ) until the declaration line is executed.
+
+Temporal Dead Zone (TDZ)
+
+Definition:
+The period between entering a scope and the execution of the let or const declaration.
+
+During this period, the variable exists but cannot be accessed.
+
+Example:
+
+{
+    console.log(a); // Error
+    let a = 5;
+}
+Function Hoisting
+Function Declaration ✅
+sayHello();
+
+function sayHello() {
+    console.log("Hello");
+}
+
+Output:
+
+Hello
+
+Reason:
+
+The entire function is hoisted.
+Function Expression ❌
+sayHello();
+
+var sayHello = function () {
+    console.log("Hello");
+};
+
+Output:
+
+TypeError
+
+Reason:
+
+Only var sayHello is hoisted (undefined).
+Function is assigned later.
+Arrow Function ❌
+sayHello();
+
+const sayHello = () => {};
+
+Output:
+
+ReferenceError
+
+Reason:
+
+const is in the TDZ.
+Memory Creation Phase
+
+Before execution, JavaScript allocates memory.
+
+var a = undefined
+
+let b = uninitialized
+
+const c = uninitialized
+
+function foo() { }
+
+Then JavaScript executes the code line by line.
+
+var vs let vs const
+Feature	var	let	const
+Hoisted	✅	✅	✅
+Default value	undefined	No	No
+TDZ	❌	✅	✅
+Access before declaration	undefined	ReferenceError	ReferenceError
+Reassign	✅	✅	❌
+Interview Answer (30 Seconds)
+
+Hoisting is JavaScript's behavior of moving declarations to the top of their scope before execution. Only declarations are hoisted, not initializations. var is initialized with undefined, so it can be accessed before its declaration. let and const are also hoisted but remain in the Temporal Dead Zone (TDZ), so accessing them before declaration throws a ReferenceError. Function declarations are fully hoisted, while function expressions and arrow functions are not.
+
+⭐ Easy Way to Remember
+var → Hoisted + undefined
+let → Hoisted + TDZ → ReferenceError
+const → Hoisted + TDZ → ReferenceError
+Function Declaration → Fully Hoisted ✅
+Function Expression → Not Fully Hoisted ❌
+Arrow Function → Not Fully Hoisted ❌
+
+
+===============================================================
+What is strict mode?
+
+# What is Strict Mode? (Simple Interview Notes)
+
+## Definition
+
+**Strict Mode** is a special mode in JavaScript that **helps you write safer and cleaner code by catching common mistakes and preventing bad practices.**
+
+To enable it, add this line at the top of your file or function:
+
+```javascript
+"use strict";
+```
+
+---
+
+# Example
+
+Without Strict Mode:
+
+```javascript
+name = "John"; // No var, let, or const
+console.log(name);
+```
+
+✅ Output:
+
+```text
+John
+```
+
+JavaScript automatically creates a global variable (bad practice).
+
+---
+
+With Strict Mode:
+
+```javascript
+"use strict";
+
+name = "John";
+```
+
+❌ Output:
+
+```text
+ReferenceError: name is not defined
+```
+
+Reason: Variables must be declared using `let`, `const`, or `var`.
+
+---
+
+# Why Use Strict Mode?
+
+* ✅ Catches common coding mistakes.
+* ✅ Prevents accidental global variables.
+* ✅ Makes code more secure.
+* ✅ Makes debugging easier.
+* ✅ Encourages modern JavaScript practices.
+
+---
+
+# Common Rules in Strict Mode
+
+### 1. Variables must be declared
+
+❌ Without strict mode:
+
+```javascript
+x = 10;
+```
+
+✅ With strict mode:
+
+```javascript
+"use strict";
+
+x = 10; // ReferenceError
+```
+
+---
+
+### 2. Duplicate parameter names are not allowed
+
+❌
+
+```javascript
+"use strict";
+
+function add(a, a) {
+    return a;
+}
+```
+
+Output:
+
+```text
+SyntaxError
+```
+
+---
+
+### 3. Cannot delete variables or functions
+
+```javascript
+"use strict";
+
+let x = 10;
+
+delete x;
+```
+
+Output:
+
+```text
+SyntaxError
+```
+
+---
+
+### 4. `this` inside a normal function
+
+Without strict mode:
+
+```javascript
+function show() {
+    console.log(this);
+}
+
+show();
+```
+
+Output:
+
+```text
+Window (Browser)
+```
+
+With strict mode:
+
+```javascript
+"use strict";
+
+function show() {
+    console.log(this);
+}
+
+show();
+```
+
+Output:
+
+```text
+undefined
+```
+
+---
+
+# Where to Use Strict Mode?
+
+### Entire File
+
+```javascript
+"use strict";
+
+// All code is in strict mode
+```
+
+### Specific Function
+
+```javascript
+function test() {
+    "use strict";
+
+    // Only this function is in strict mode
+}
+```
+
+---
+
+# Do We Need It Today?
+
+If you use **ES Modules** (`import` / `export`) or **JavaScript classes**, **strict mode is enabled automatically**.
+
+Example:
+
+```javascript
+// app.js
+export function hello() {}
+```
+
+No need to write:
+
+```javascript
+"use strict";
+```
+
+---
+
+# Interview Questions
+
+### 1. What is Strict Mode?
+
+**Answer:**
+Strict Mode is a JavaScript feature that enables a stricter set of rules, helping developers catch errors early and avoid unsafe coding practices.
+
+---
+
+### 2. How do you enable Strict Mode?
+
+```javascript
+"use strict";
+```
+
+Place it at the top of a file or function.
+
+---
+
+### 3. What are the benefits?
+
+* Finds errors early.
+* Prevents accidental global variables.
+* Makes debugging easier.
+* Improves code quality.
+* Encourages secure coding.
+
+---
+
+### 4. Is Strict Mode enabled automatically?
+
+**Yes.** It is automatically enabled in:
+
+* ES Modules (`import` / `export`)
+* JavaScript Classes
+
+---
+
+# Quick Revision
+
+* **Strict Mode = Safer JavaScript**
+* Enable with: `"use strict";`
+* Prevents accidental global variables.
+* Throws errors for unsafe code.
+* Makes debugging easier.
+* Automatically enabled in **ES Modules** and **Classes**.
+
+---
+
+# Interview Answer (30 Seconds)
+
+> **Strict Mode is a JavaScript feature that enforces stricter rules to help developers write safer and cleaner code. It is enabled by adding `"use strict";` at the top of a file or function. It prevents common mistakes like creating undeclared variables, disallows duplicate parameter names, changes some unsafe behaviors into errors, and makes debugging easier. In modern JavaScript, ES Modules and classes run in strict mode automatically.**
+
+===========================================================================
+
+What is type coercion?
+
+**Type coercion is JavaScript's automatic conversion of one data type into another when performing operations. For example, "5" + 2 results in "52" because the number is converted to a string, while "5" - 2 results in 3 because the string is converted to a number. The == operator performs type coercion before comparing values, whereas === compares both value and type without any conversion. For predictable code, it's recommended to use ===.`
+
+
+What is the difference between == and ===?
+== compares values after performing type coercion.
+=== compares both value and type without type coercion.
+
+3. What are the types of coercion?
+Implicit Coercion → Automatic conversion by JavaScript.
+Explicit Coercion → Manual conversion by the developer.
+
+Quick Revision
+Type Coercion = Automatic type conversion
+"5" + 2 → "52"
+"5" - 2 → 3
+true → 1
+false → 0
+== → Performs type coercion
+=== → No type coercion
+Use === for safer comparisons
+
+
+
+============================================
+
+Why does [] == false return true?
+[] == false
+
+↓
+false → 0
+
+[] → ""
+
+"" → 0
+
+0 == 0
+
+↓
+true
+
+more examples:
+[] == false      // true
+[] == 0          // true
+[] == ""         // true
+
+false == 0       // true
+"" == 0          // true
+
+[] == false returns true because the == operator performs type coercion. First, false is converted to 0. Then the empty array [] is converted to an empty string "", and the empty string is converted to 0. Finally, JavaScript compares 0 == 0, which is true. Using === avoids these automatic conversions and returns false because the types are different.
+
+=============================================================================================================
+
+
+
+

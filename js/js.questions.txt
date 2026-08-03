@@ -340,3 +340,52 @@ Implementing polyfills (map, filter, reduce, bind)
 Small coding problems like Two Sum, flatten array, remove duplicates, and longest substring without repeating characters.
 
 
+=============================================================
+
+What is strict mode?
+Strict Mode is a JavaScript feature that enforces stricter rules to help developers write safer and cleaner code. It is enabled by adding "use strict"; at the top of a file or function. It prevents common mistakes like creating undeclared variables, disallows duplicate parameter names, changes some unsafe behaviors into errors, and makes debugging easier. In modern JavaScript, ES Modules and classes run in strict mode automatically.
+
+==================================================================================
+
+
+
+𝗝𝗮𝘃𝗮𝗦𝗰𝗿𝗶𝗽𝘁 & 𝗖𝗦𝗦 - 
+• Center a div without using display properties.
+• Explain forEach, map, filter, and reduce.
+• Difference between setState and useState.
+• Coding Question: 𝗖𝗵𝗲𝗰𝗸 𝘄𝗵𝗲𝘁𝗵𝗲𝗿 𝘁𝘄𝗼 𝘀𝘁𝗿𝗶𝗻𝗴𝘀 𝗮𝗿𝗲 𝗮𝗻𝗮𝗴𝗿𝗮𝗺𝘀 𝗼𝗳 𝗲𝗮𝗰𝗵 𝗼𝘁𝗵𝗲𝗿 𝘄𝗶𝘁𝗵𝗼𝘂𝘁 𝘂𝘀𝗶𝗻𝗴 𝗶𝗻𝗯𝘂𝗶𝗹𝘁 𝗺𝗲𝘁𝗵𝗼𝗱𝘀 𝗹𝗶𝗸𝗲 𝘀𝗼𝗿𝘁() 𝗼𝗿 𝗷𝗼𝗶𝗻().
+
+𝗥𝗲𝗮𝗰𝘁.𝗷𝘀 & Nextjs -
+• How would you efficiently render a large list of data without pagination & Follow ups on ans?
+• Different types of Hooks you've used.
+• useCallback vs useMemo and when would you use them?
+• Why and when should we create Custom Hooks?
+• If a Custom Hook contains two useEffect (one with an empty dependency array and one with dependencies), when will each execute if the component re-renders?
+• How would you pass data from a child component to its parent?
+• follow-up question was how this was achieved before forwardRef.
+• What are the different ways of passing data between components & Follow ups.
+• What are hydration issues in React, and how would you fix them?
+• Dynamic routing in Nextjs & Follow ups
+
+𝗥𝗲𝗱𝘂𝘅 - 
+• Explain Redux architecture and its data flow. 
+• Which hooks are available with redux ?
+• How will you use state values in components? 
+• Can we create multiple reducers? If yes, how?
+• Can we use values from different reducers in any component? 
+• What are Redux middleware, and which ones have you worked with?
+
+𝗔𝗰𝗰𝗲𝘀𝘀𝗶𝗯𝗶𝗹𝗶𝘁𝘆 (𝗮𝟭𝟭𝘆 & 𝗪𝗖𝗔𝗚)- 
+• What is accessibility, and why is it important?
+• How have you implemented accessibility in your applications?
+• How do screen readers work and which screen reader have u used?
+• What practices do you follow to make components accessible?
+
+𝗣𝗲𝗿𝗳𝗼𝗿𝗺𝗮𝗻𝗰𝗲 & 𝗧𝗲𝘀𝘁𝗶𝗻𝗴 -
+• Why do we use bundlers (Webpack and Vite)?
+• What are the advantages of Webpack over Vite and vice versa?
+• Have a big bundle, how will you reduce it?
+• How does code/chunk splitting work in Webpack?
+• What are Core Web Vitals, and how would you measure them?
+• Which library have you used for unit testing in React, and why?
+• How would you test a button click event using both React Testing Library and Jest?
