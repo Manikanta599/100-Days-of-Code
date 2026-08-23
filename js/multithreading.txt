@@ -1,0 +1,747 @@
+# Multithreading & Concurrency (Interview Notes)
+
+## 1. What is a Process?
+
+A **process** is a running program.
+
+**Examples:**
+
+* Chrome
+* VS Code
+* Spotify
+
+Each process has its own:
+
+* Memory
+* Heap
+* Stack
+* Variables
+
+**Diagram:**
+
+```
+Operating System
+
+Process 1 → Chrome
+Process 2 → VS Code
+Process 3 → Node App
+```
+
+---
+
+## 2. What is a Thread?
+
+A **thread** is the smallest unit of execution inside a process.
+
+A single process can contain multiple threads.
+
+**Diagram:**
+
+```
+Node Process
+
+Main Thread
+Worker Thread
+Worker Thread
+Worker Thread
+```
+
+All threads share:
+
+* Memory
+* Variables
+* Files
+
+Each thread has its own:
+
+* Call Stack
+* Program Counter
+
+### Real-Life Example
+
+Imagine a restaurant.
+
+* **Process** = Restaurant
+* **Threads** = Workers
+
+```
+Restaurant
+
+Cook 1
+Cook 2
+Cook 3
+Cashier
+```
+
+All workers work in the same restaurant and share the restaurant's resources.
+
+---
+
+## 3. What is Multithreading?
+
+**Definition:**
+
+Multithreading means **multiple threads working inside the same process**.
+
+**Example:**
+
+```
+Thread 1 → Download File
+Thread 2 → Play Music
+Thread 3 → Update UI
+```
+
+All these tasks can run at the same time (or appear to).
+
+### Benefits
+
+* Faster execution
+* Better CPU utilization
+* Ability to perform multiple tasks simultaneously
+* Improved application responsiveness
+
+### Java Example
+
+```java
+class MyThread extends Thread {
+    public void run() {
+        System.out.println("Running...");
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        MyThread t1 = new MyThread();
+        MyThread t2 = new MyThread();
+
+        t1.start();
+        t2.start();
+    }
+}
+```
+
+---
+
+## 4. What is Concurrency?
+
+**Definition:**
+
+Concurrency means **multiple tasks make progress during the same period of time.**
+
+The tasks **do not have to execute exactly at the same time**.
+
+The CPU rapidly switches between tasks.
+
+**Example:**
+
+```
+Task A
+↓
+Task B
+↓
+Task A
+↓
+Task C
+↓
+Task B
+```
+
+### Real-Life Example
+
+While using your phone:
+
+* Watching YouTube
+* Downloading a file
+* Chatting on WhatsApp
+
+The phone rapidly switches between these tasks.
+
+This is **Concurrency**.
+
+---
+
+## 5. What is Parallelism?
+
+**Definition:**
+
+Parallelism means **multiple tasks execute at exactly the same time**.
+
+It requires:
+
+* Multiple CPU cores
+* Multiple processors
+
+**Example:**
+
+```
+Core 1 → Task A
+Core 2 → Task B
+Core 3 → Task C
+```
+
+---
+
+## Concurrency vs Parallelism
+
+| Concurrency                     | Parallelism                 |
+| ------------------------------- | --------------------------- |
+| Tasks make progress together    | Tasks execute together      |
+| CPU switches between tasks      | Tasks run simultaneously    |
+| Can work with a single CPU core | Requires multiple CPU cores |
+
+### Real-Life Example
+
+#### Concurrency (One Chef)
+
+```
+Cooking
+↓
+Serving
+↓
+Cleaning
+↓
+Cooking
+```
+
+One chef keeps switching between tasks.
+
+#### Parallelism (Multiple Chefs)
+
+```
+Chef 1 → Cooking
+Chef 2 → Serving
+Chef 3 → Cleaning
+```
+
+Each chef performs a different task simultaneously.
+
+---
+
+## 6. Single Thread
+
+One thread handles all tasks.
+
+```
+Task 1
+↓
+Task 2
+↓
+Task 3
+```
+
+If Task 1 takes 10 seconds, Tasks 2 and 3 must wait.
+
+---
+
+## 7. Multi Thread
+
+```
+Thread 1 → Task 1
+Thread 2 → Task 2
+Thread 3 → Task 3
+```
+
+Tasks execute independently.
+
+---
+
+## 8. Why Multithreading?
+
+Suppose downloading a file takes 10 seconds.
+
+### Without Multithreading
+
+```
+Download
+↓
+Play Music
+```
+
+The user waits.
+
+### With Multithreading
+
+```
+Thread 1 → Download
+Thread 2 → Play Music
+```
+
+The music continues while the file downloads.
+
+---
+
+## 9. Shared Memory
+
+Threads inside the same process share memory.
+
+Example:
+
+```java
+balance = 1000;
+```
+
+Thread 1:
+
+```
+Withdraw 500
+```
+
+Thread 2:
+
+```
+Withdraw 300
+```
+
+Since both access the same variable, problems can occur.
+
+---
+
+## 10. Race Condition
+
+Suppose:
+
+```
+balance = 1000
+```
+
+Thread 1:
+
+```
+Read 1000
+```
+
+Thread 2:
+
+```
+Read 1000
+```
+
+Thread 1:
+
+```
+balance = 500
+```
+
+Thread 2:
+
+```
+balance = 700
+```
+
+Expected Result:
+
+```
+200
+```
+
+Actual Result:
+
+```
+700
+```
+
+This is called a **Race Condition**.
+
+**Definition:**
+
+A race condition occurs when multiple threads access and modify shared data simultaneously, producing incorrect or unpredictable results.
+
+---
+
+## 11. Synchronization
+
+Synchronization prevents race conditions.
+
+Only one thread can enter the critical section at a time.
+
+```
+Thread 1
+↓
+Lock
+↓
+Update
+↓
+Unlock
+↓
+Thread 2
+```
+
+### Java Example
+
+```java
+public synchronized void withdraw() {
+    // Critical section
+}
+```
+
+---
+
+## 12. Deadlock
+
+A deadlock happens when two or more threads wait for each other forever.
+
+Example:
+
+Thread 1:
+
+```
+Needs Lock A
+Waiting for Lock B
+```
+
+Thread 2:
+
+```
+Needs Lock B
+Waiting for Lock A
+```
+
+Neither thread can continue.
+
+---
+
+## 13. Thread Safety
+
+A class is **thread-safe** if multiple threads can use it simultaneously without causing incorrect results.
+
+### Ways to Achieve Thread Safety
+
+* `synchronized`
+* `ReentrantLock`
+* `AtomicInteger`
+* Immutable Objects
+* Concurrent Collections (`ConcurrentHashMap`)
+
+---
+
+## 14. Context Switching
+
+The CPU switches between threads.
+
+```
+Thread A
+↓
+Thread B
+↓
+Thread C
+```
+
+This switching is called **Context Switching**.
+
+Too many context switches can reduce performance.
+
+---
+
+## 15. CPU-bound vs I/O-bound Tasks
+
+### CPU-bound Tasks
+
+These tasks require heavy CPU computation.
+
+Examples:
+
+* Image processing
+* Video encoding
+* Encryption
+* Mathematical calculations
+
+Adding more CPU cores or threads can improve performance.
+
+### I/O-bound Tasks
+
+These tasks spend most of their time waiting for external resources.
+
+Examples:
+
+* Database queries
+* File reading/writing
+* API requests
+* Network communication
+
+Concurrency helps by allowing other work while waiting for I/O operations to complete.
+
+---
+
+## 16. Node.js and Concurrency
+
+Node.js uses:
+
+* One Main JavaScript Thread
+* Event Loop
+* Non-blocking I/O
+* libuv Thread Pool
+
+Example:
+
+```javascript
+console.log("Start");
+
+setTimeout(() => {
+    console.log("Timer");
+}, 2000);
+
+console.log("End");
+```
+
+Output:
+
+```
+Start
+End
+Timer
+```
+
+The timer waits in the background while the main thread continues executing.
+
+This is concurrency without creating multiple JavaScript threads.
+
+---
+
+## 17. Node.js Worker Threads
+
+For CPU-intensive tasks, Node.js provides **Worker Threads**.
+
+Example:
+
+```javascript
+const { Worker } = require("worker_threads");
+
+new Worker("./worker.js");
+```
+
+Each worker has its own JavaScript thread and can run in parallel on multi-core CPUs.
+
+### Use Worker Threads For
+
+* Image processing
+* Video processing
+* Large calculations
+* Machine learning tasks
+
+Avoid Worker Threads for normal database queries or API calls, since asynchronous I/O is usually sufficient.
+
+---
+
+# Interview Answers
+
+### What is a Thread?
+
+A thread is the smallest unit of execution inside a process. Multiple threads share the same process memory but have separate call stacks.
+
+---
+
+### What is Multithreading?
+
+Multithreading is the ability of a process to execute multiple threads concurrently, improving responsiveness and CPU utilization.
+
+---
+
+### What is Concurrency?
+
+Concurrency is the ability to make progress on multiple tasks during the same period by switching between them efficiently.
+
+---
+
+### What is Parallelism?
+
+Parallelism is the execution of multiple tasks simultaneously using multiple CPU cores.
+
+---
+
+### Difference Between Concurrency and Parallelism
+
+Concurrency is about managing multiple tasks efficiently.
+
+Parallelism is about executing multiple tasks at exactly the same time.
+
+---
+
+### What is a Race Condition?
+
+A race condition occurs when multiple threads modify shared data simultaneously, leading to incorrect or unpredictable results.
+
+---
+
+### What is Synchronization?
+
+Synchronization ensures only one thread accesses a critical section at a time, preventing race conditions.
+
+---
+
+### How Does Node.js Handle Concurrency?
+
+Node.js uses a single JavaScript thread with an Event Loop and asynchronous, non-blocking I/O. For CPU-intensive work, it uses Worker Threads to achieve parallel execution.
+
+---
+
+## Key Points to Remember
+
+* **Process** → A running program.
+* **Thread** → Smallest unit of execution inside a process.
+* **Multithreading** → Multiple threads within one process.
+* **Concurrency** → Multiple tasks make progress together.
+* **Parallelism** → Multiple tasks execute simultaneously.
+* **Race Condition** → Incorrect results due to simultaneous access to shared data.
+* **Synchronization** → Prevents race conditions.
+* **Deadlock** → Threads wait on each other forever.
+* **Thread Safety** → Safe access to shared resources by multiple threads.
+* **Context Switching** → CPU switches between threads.
+* **CPU-bound Tasks** → Heavy computation.
+* **I/O-bound Tasks** → Waiting for external resources.
+* **Node.js** → Single JavaScript thread + Event Loop + libuv Thread Pool + Worker Threads.
+
+
+
+
+
+
+
+Fast answer
+Concurrency and parallelism are related concepts, but they solve different problems.
+
+Concurrency	Parallelism
+Deals with handling multiple tasks at the same time.	Deals with executing multiple tasks at the exact same time.
+Tasks may take turns using the CPU.	Tasks run simultaneously on multiple CPU cores/processors.
+Focuses on task management and responsiveness.	Focuses on performance and speed.
+Can be achieved on a single-core CPU.	Typically requires multiple CPU cores or processors.
+Simple Analogy
+Imagine a chef preparing two dishes.
+
+Concurrency (one chef):
+
+The chef chops vegetables for Dish A.
+
+While they cook, the chef starts preparing Dish B.
+
+The chef switches between the two tasks.
+
+Both dishes progress together, but only one action happens at any instant.
+
+Parallelism (two chefs):
+
+Chef 1 prepares Dish A.
+
+Chef 2 prepares Dish B.
+
+Both dishes are worked on at the same time.
+
+Visual Representation
+Concurrency (single core):
+
+Time →
+Task A: ███   ███   ███
+Task B:    ███   ███
+
+CPU:   A A A B B A A B A
+Parallelism (multiple cores):
+
+Time →
+
+Core 1: A A A A A
+Core 2: B B B B B
+Example in Programming
+Concurrency
+
+import asyncio
+
+async def task1():
+    print("Task 1 started")
+    await asyncio.sleep(2)
+    print("Task 1 finished")
+
+async def task2():
+    print("Task 2 started")
+    await asyncio.sleep(2)
+    print("Task 2 finished")
+
+asyncio.run(asyncio.gather(task1(), task2()))
+Both tasks make progress together.
+
+While one task waits (e.g., for I/O), the other can run.
+
+Excellent for I/O-bound work like network requests or file operations.
+
+Parallelism
+
+from multiprocessing import Pool
+
+def square(x):
+    return x * x
+
+with Pool(4) as pool:
+    print(pool.map(square, [1, 2, 3, 4]))
+Multiple CPU cores perform computations simultaneously.
+
+Ideal for CPU-intensive work like image processing or scientific calculations.
+
+When to Use
+Use concurrency when:
+
+Handling many network requests
+
+Building web servers
+
+Reading/writing files
+
+Waiting on databases or APIs
+
+Use parallelism when:
+
+Performing heavy mathematical computations
+
+Processing large datasets
+
+Video or image rendering
+
+Machine learning workloads
+
+Key Takeaway
+Concurrency = dealing with multiple tasks (they may not run simultaneously).
+
+Parallelism = doing multiple tasks simultaneously (requires multiple execution units).
+
+A common way to remember it is:
+
+Concurrency is about structure (managing many tasks). Parallelism is about execution (running many tasks at once).
+
+
+Today 12:44 PM
+according to my backend inventory management system give me simple interview answer
+
+For an interview, you can explain it in a simple way using your backend inventory management system:
+
+“Concurrency means handling multiple requests at the same time. For example, in my inventory management system, multiple users may try to update or check product stock simultaneously. The backend needs to handle those requests safely without causing incorrect stock data.
+
+Parallelism means actually executing multiple tasks at the same time using multiple CPU cores. For example, if the system needs to process multiple independent inventory operations, they can be executed in parallel to improve performance.
+
+So, simply, concurrency is about managing multiple tasks, while parallelism is about executing multiple tasks simultaneously.”
+
+If the interviewer asks for a one-line difference:
+“Concurrency is dealing with multiple tasks at the same time, whereas parallelism is executing multiple tasks at the same time.”
+
+
+What is a Race Condition?
+
+For your backend inventory management system, a simple interview answer would be:
+
+“A race condition happens when multiple requests access or modify the same data at the same time, and the final result depends on which request executes first.”
+
+For example, if my inventory has 1 product in stock and two customers place an order at the same time, both requests might read the stock as 1 and both try to purchase it. This can result in incorrect stock, such as -1 or selling the same product twice.
+
+To prevent this, we can use database transactions, locking, or atomic update queries.”
+
+Easy example to remember
+Stock = 1
+
+Request A → reads stock = 1
+Request B → reads stock = 1
+
+Request A → sells 1
+Request B → sells 1
+
+Result → 2 products sold, but only 1 was available ❌
+One-line interview answer:
+
+“A race condition occurs when multiple requests access shared data concurrently and produce an incorrect or unpredictable result.”
+
+

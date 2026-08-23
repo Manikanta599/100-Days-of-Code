@@ -668,6 +668,47 @@ false == 0       // true
 
 =============================================================================================================
 
+null == undefined :
+
+null == undefined returns true because JavaScript defines a special rule for the loose equality (==) operator: null and undefined are considered equal only to each other. No type coercion is performed in this case. However, null === undefined returns false because strict equality checks both value and type, and null and undefined are different types.
+
+=======================================================
+
+NaN == NaN :
+NaN stands for Not-a-Number.
+
+It represents the result of an invalid mathematical operation.
+
+Example:
+console.log(0 / 0);      // NaN
+console.log(Number("Hi"));// NaN
+console.log(Math.sqrt(-1)); // NaN
+
+This is a special rule in JavaScript (and IEEE 754 floating-point standard).
+NaN is never equal to any value, including itself.
+So:
+NaN == NaN     // false
+NaN === NaN    // false
+
+JavaScript treats NaN as an unknown or invalid numeric value. Since its exact value is unknown, it cannot be considered equal to anything—not even another NaN.
+
+=================================================================
+Difference Between isNaN() and Number.isNaN() : 
+Both isNaN() and Number.isNaN() are used to check whether a value is NaN (Not-a-Number).
+isNaN() converts the value to a number before checking.
+Number.isNaN() checks the value without converting it.
 
 
+===============================================================
+Difference between Object.is() and ===. 
+Both === and Object.is() compare values without type coercion. The main differences are in two special cases. === considers NaN not equal to itself and treats +0 and -0 as equal. Object.is() considers NaN equal to NaN and distinguishes between +0 and -0. For most comparisons, use ===. Use Object.is() only when you need these special comparison behaviors.
 
+==================================================
+
+In JavaScript, every value is either truthy or falsy when evaluated in a boolean context. Falsy values are false, 0, -0, 0n, "", null, undefined, and NaN. Every other value is truthy, including empty arrays ([]) and empty objects ({}). JavaScript automatically converts these values to true or false in conditions such as if statements.
+
+=================================================================
+What are short-circuit operators?
+Short-circuit operators stop evaluating expressions as soon as the result is known. The && operator returns the first falsy value or the last value if all are truthy. The || operator returns the first truthy value or the last value if all are falsy. The ?? operator returns the right-hand value only when the left-hand value is null or undefined. These operators are commonly used for conditional logic and providing default values.
+
+============================================================================

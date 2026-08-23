@@ -1,0 +1,32 @@
+
+
+Scanner is a Java class used to read input from the keyboard (or other input sources). For DSA, you'll mostly use nextInt(), nextLong(), next(), and nextLine().
+
+| Method             | Reads          |
+| ------------------ | -------------- |
+| `nextInt()`        | Integer        |
+| `nextLong()`       | Long integer   |
+| `nextDouble()`     | Decimal number |
+| `next()`           | One word       |
+| `nextLine()`       | Entire line    |
+| `next().charAt(0)` | One character  |
+
+
+For Array : 
+Scanner sc = new Scanner(System.in);
+
+int n = sc.nextInt();
+int[] arr = new int[n];
+
+for (int i = 0; i < n; i++) {
+    arr[i] = sc.nextInt();
+}
+
+for (int i = 0; i < n; i++) {
+    System.out.print(arr[i] + " ");
+}
+
+sc.close();
+
+
+
