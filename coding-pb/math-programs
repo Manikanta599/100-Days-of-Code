@@ -1,0 +1,82 @@
+🔢 1. Basic Number Programs
+Check whether a number is Even or Odd
+Find Positive / Negative / Zero
+Find the Largest of 2 or 3 numbers
+Swap two numbers
+Find the Sum of digits
+Count the number of digits
+Reverse a number
+Check Palindrome number
+Check Armstrong number
+Check Prime number
+Print prime numbers in a range
+Find factors of a number
+Count factors of a number
+Find GCD / HCF
+Find LCM
+Calculate power without using Math.pow()
+🔁 2. Series & Mathematical Patterns
+Print Fibonacci series
+Find the Nth Fibonacci number
+Find factorial of a number
+Calculate 1 + 2 + 3 + ... + N
+Calculate 1² + 2² + ... + N²
+Calculate 1³ + 2³ + ... + N³
+Print multiplication table
+Find sum of even numbers in a range
+Find sum of odd numbers in a range
+🔍 3. Number Logic — Very Common
+Reverse a number
+Palindrome number
+Armstrong number
+Perfect number
+Strong number
+Harshad/Niven number
+Automorphic number
+Neon number
+Spy number
+Happy number
+Disarium number
+Duck number
+Abundant number
+Deficient number
+🧮 4. Array + Math Problems
+Find maximum/minimum in an array
+Find second largest number
+Find second smallest number
+Find sum/average of array
+Find duplicate numbers
+Find missing number from 1...N
+Find frequency of numbers
+Find common elements between arrays
+Find intersection of two arrays
+Find union of two arrays
+Find pair whose sum equals target
+Find three numbers whose sum equals target
+Find maximum difference between two elements
+Find maximum subarray sum — Kadane's Algorithm
+⭐ 5. Must-Know Interview Problems
+
+If you don't want to solve 50+ problems initially, start with these:
+
+#	Problem	Difficulty
+1	Prime Number	Easy
+2	Fibonacci	Easy
+3	Factorial	Easy
+4	Reverse Number	Easy
+5	Palindrome Number	Easy
+6	Armstrong Number	Easy
+7	GCD / LCM	Easy
+8	Sum of Digits	Easy
+9	Missing Number	Easy
+10	Duplicate Number	Easy
+11	Second Largest	Easy
+12	Two Sum	Easy
+13	Frequency Counter	Easy
+14	Maximum Subarray	Medium
+15	Binary Search	Medium
+
+
+
+
+Sieve of Eratosthenes

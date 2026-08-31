@@ -1,0 +1,266 @@
+1. NestJS Fundamentals
+What is NestJS?
+Why use NestJS instead of plain Node.js/Express?
+What are the main features of NestJS?
+What is a Module in NestJS?
+What is a Controller?
+What is a Service?
+What is Dependency Injection?
+How does Dependency Injection work internally in NestJS?
+What is a Provider?
+What is the difference between a Controller and a Service?
+What is @Module()?
+What are imports, providers, controllers, and exports?
+What is the purpose of @Injectable()?
+How does NestJS application bootstrap work?
+What is the difference between NestJS and Express?
+
+
+
+2. Request/Response Flow — Very Important
+
+You should clearly understand:
+
+Client → Middleware → Guard → Interceptor → Pipe → Controller → Service → Repository/DB → Response
+
+Interview questions:
+
+Explain the request lifecycle in NestJS.
+What is Middleware?
+What is a Guard?
+What is a Pipe?
+What is an Interceptor?
+What is an Exception Filter?
+Difference between Middleware and Guard.
+Difference between Guard and Interceptor.
+Difference between Pipe and Interceptor.
+What is the execution order of Middleware, Guards, Interceptors and Pipes?
+How do you handle global exceptions?
+How do you create custom middleware?
+How do you create a custom guard?
+How do you create a custom pipe?
+How do you create a custom interceptor?
+
+
+3. Authentication & Authorization
+
+This is very important for backend interviews.
+
+How do you implement JWT authentication in NestJS?
+What is JWT?
+How does JWT authentication work?
+What are Access Token and Refresh Token?
+Why do we need Refresh Tokens?
+Where should JWT tokens be stored?
+What happens if an access token is stolen?
+What happens if a refresh token is stolen?
+How do you implement role-based authorization?
+What is PassportModule?
+What is JwtStrategy?
+What is the purpose of AuthGuard('jwt')?
+Authentication vs Authorization?
+How would you implement permissions instead of just roles?
+
+
+4. Database + TypeORM
+
+Since you work with MySQL + TypeORM, prepare these well.
+
+How do you connect MySQL with NestJS?
+What is TypeORM?
+What is an Entity?
+What is a Repository?
+Repository vs Service?
+What are Relations in TypeORM?
+Explain OneToOne, OneToMany, ManyToOne, ManyToMany.
+What is QueryBuilder?
+When would you use QueryBuilder instead of Repository methods?
+What are Transactions?
+How do you implement transactions in NestJS?
+What is a database connection pool?
+How do you handle database errors?
+What is the N+1 query problem?
+How do you optimize slow database queries?
+What are database indexes?
+How do you handle migrations?
+Why should synchronize: true generally not be used in production?
+
+
+5. API Development
+How do you create REST APIs in NestJS?
+What are HTTP methods?
+Difference between POST, PUT, and PATCH.
+What are DTOs?
+Why use DTOs?
+What is class-validator?
+How do you validate request bodies?
+What is ValidationPipe?
+What is the difference between @Param(), @Query(), and @Body()?
+How do you implement pagination?
+How do you implement filtering and sorting?
+How do you handle API errors?
+How do you create a consistent API response structure?
+How do you version APIs?
+
+6. Advanced NestJS
+What are custom providers?
+What are provider scopes in NestJS?
+Singleton vs Request-scoped providers?
+What are Dynamic Modules?
+What are Global Modules?
+What are Custom Decorators?
+What are Metadata and Reflection in NestJS?
+What is Reflector?
+What are Lifecycle Events?
+What is OnModuleInit?
+What is OnApplicationBootstrap?
+How do you create reusable modules?
+How do you avoid circular dependencies?
+What is forwardRef()?
+7. Performance & Scalability
+
+For a 2-year backend developer, these can differentiate you from other candidates.
+
+How do you improve NestJS API performance?
+How does Node.js handle concurrent requests?
+What is the Event Loop?
+What happens when a CPU-intensive task runs in Node.js?
+How do you handle CPU-intensive operations?
+How do you implement caching in NestJS?
+Why use Redis?
+How do you use Redis with NestJS?
+What is rate limiting?
+How do you implement rate limiting?
+How do you handle large file uploads?
+How do you handle background jobs?
+What is a Queue?
+Why use Bull/BullMQ?
+How would you process a long-running task asynchronously?
+8. Redis / Queues
+
+Since you've worked with Redis and Bull, prepare these specifically.
+
+What is Redis?
+Why is Redis fast?
+What are common Redis data types?
+Redis vs MySQL?
+What is Redis caching?
+What is cache invalidation?
+What is a Redis lock?
+What is a distributed lock?
+What is Bull/BullMQ?
+Why use queues?
+What happens if a queue job fails?
+How do you retry failed jobs?
+How do you prevent duplicate jobs?
+What is a dead-letter queue?
+How would you monitor background jobs?
+9. Testing
+What is unit testing?
+What is integration testing?
+Unit test vs integration test?
+How do you test a NestJS service?
+How do you mock dependencies?
+What is Jest?
+How do you test a Controller?
+How do you test an API endpoint?
+What is E2E testing?
+How do you test database-related functionality?
+10. Security
+How do you secure a NestJS API?
+What is CORS?
+How do you configure CORS?
+What is Helmet?
+What is SQL Injection?
+How does TypeORM help prevent SQL Injection?
+What is XSS?
+What is CSRF?
+How do you securely store passwords?
+Why should passwords be hashed?
+bcrypt vs encryption?
+How do you prevent brute-force attacks?
+How do you implement rate limiting?
+How do you validate uploaded files?
+11. Node.js Questions You Should Know
+
+Don't prepare only NestJS. NestJS runs on Node.js, so interviewers often move into Node.
+
+What is Node.js?
+How does Node.js handle asynchronous operations?
+What is the Event Loop?
+What is the Call Stack?
+What is the Callback Queue?
+What is the Microtask Queue?
+Promise vs async/await?
+What is process.nextTick()?
+What are Worker Threads?
+What is clustering?
+What is EventEmitter?
+CommonJS vs ES Modules?
+What is middleware in Express?
+How does Node.js handle multiple requests?
+Is Node.js single-threaded?
+If Node.js is single-threaded, how does it handle multiple requests?
+
+12. Real-World Scenario Questions ⭐
+
+These are very important for your experience level.
+
+Your API is taking 5 seconds. How would you debug it?
+One API is receiving 10,000 requests per second. How would you handle it?
+Your database query is very slow. What would you check?
+An API is creating duplicate records. How would you prevent it?
+Two users are updating the same record simultaneously. How would you handle it?
+Your server crashes because of an unhandled exception. How would you investigate?
+A Redis server goes down. What happens to your application?
+A queue job fails repeatedly. How would you handle it?
+Your API needs to process a large Excel file. Would you process it directly inside the API request?
+An external API takes 30 seconds to respond. How would you design your API?
+How would you implement retry logic for an external API?
+How would you prevent users from calling an API too frequently?
+How would you design a notification system?
+How would you implement logging in NestJS?
+How would you monitor a NestJS application in production?
+
+13. System Design Questions
+
+For your next-level backend interviews, start preparing these after NestJS fundamentals:
+
+Design a URL Shortener
+Design a Notification System
+Design a File Upload System
+Design an Authentication System
+Design an E-commerce Backend
+Design an Inventory Management System
+Design an Order Management System
+Design a Rate Limiter
+Design a Job Queue
+Design a Chat Application
+Design a Payment System
+Design an API Gateway
+
+For your background, I would especially prepare:
+
+Inventory Management System → Order → Stock → Reservation → Transaction → Redis → Queue → Database
+
+That can give you a strong real-world project discussion in interviews.
+
+Recommended preparation order
+
+Phase 1 — Must know
+
+NestJS → Modules → Controllers → Services → DI → DTO → Validation → Guards → JWT → TypeORM
+
+Phase 2 — Backend fundamentals
+
+Node.js → Event Loop → Async Programming → HTTP → REST → SQL → Indexing → Transactions
+
+Phase 3 — Production
+
+Redis → Caching → Queues/BullMQ → Rate Limiting → Logging → Error Handling → Docker
+
+Phase 4 — Advanced
+
+Performance → Scalability → Microservices → System Design → AWS
+
+
